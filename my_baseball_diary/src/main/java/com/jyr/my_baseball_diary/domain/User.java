@@ -9,7 +9,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Table(name = "members")
@@ -28,19 +30,24 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "userName", nullable = false)
+    @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(name = "favoriteTeamId")
+    @Column(name = "favorite_team_id")
     private Long favoriteTeamId;
 
+    @Column(name = "create_dt")
+    private LocalDateTime createDate;
+
     @Builder
-    public User(Long id, String email, String password, String userName, Long favoriteTeamId, String auth) {
+    public User(Long id, String email, String password, String userName,
+                Long favoriteTeamId, LocalDateTime createDate, String auth) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.userName = userName;
         this.favoriteTeamId = favoriteTeamId;
+        this.createDate = createDate;
     }
 
     @Override

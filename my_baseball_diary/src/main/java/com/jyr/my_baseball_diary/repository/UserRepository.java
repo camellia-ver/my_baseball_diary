@@ -3,14 +3,12 @@ package com.jyr.my_baseball_diary.repository;
 import com.jyr.my_baseball_diary.domain.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-@RequiredArgsConstructor
-public class UserRepository{
-    private final EntityManager em;
+import java.util.Optional;
 
-    public User findByEmail(String email) {
-        return em.find(User.class, email);
-    }
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
 }
