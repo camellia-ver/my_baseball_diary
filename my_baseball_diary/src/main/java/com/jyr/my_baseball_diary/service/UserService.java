@@ -16,15 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService{
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
-                .orElseThrow(()->new IllegalArgumentException((email)));
-    }
 
     @Transactional
     public Long join(AddUserRequest dto) {

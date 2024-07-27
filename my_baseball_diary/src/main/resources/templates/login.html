@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<html>
 <head>
     <title>My BaseBall Diary</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -10,22 +9,31 @@
     <link rel="stylesheet" type="text/css"  href="/css/login.css">
 </head>
 <body>
-   <div class="container">
-       <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-       <div class="user-info">
-           <form class="form-floating">
-               <input type="email" class="form-control" id="floatingInputInvalid" placeholder="name@example.com">
-               <label for="floatingInputInvalid">Email address</label>
-           </form>
-           <form class="form-floating">
-               <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-               <label for="floatingPassword">Password</label>
-           </form>
-       </div>
-       <div class="sing_button">
-           <button type="button" class="btn btn-primary">login</button>
-           <button type="button" class="btn btn-outline-primary">Sign up</button>
-       </div>
-   </div>
+    <section class="d-flex vh-100">
+        <div class="container-fluid row justify-content-center align-content-center">
+            <div class="card">
+                <div class="card-body p-5 text-center">
+                    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                    <form class="form-floating mb-3" action="/login" method="post">
+                        <div class="user-info mb-4">
+                            <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+                            <div class="mb-3">
+                                <label for="floatingInputInvalid">Email address</label>
+                                <input type="email" class="form-control" id="floatingInputInvalid" placeholder="name@example.com">
+                            </div>
+                            <div>
+                                <label for="floatingPassword">Password</label>
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="sign_button">
+                            <button type="submit" class="btn btn-light">login</button>
+                            <button type="button" class="btn btn-outline-light" onclick="location.href='/signup'">Sign up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

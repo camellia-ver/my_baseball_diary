@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,10 +34,11 @@ public class User implements UserDetails {
     @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(name = "favorite_team_id")
+    @Column(name = "favorite_team_id", nullable = false)
     private Long favoriteTeamId;
 
-    @Column(name = "create_dt")
+    @CreatedDate
+    @Column(name = "create_dt", nullable = false)
     private LocalDateTime createDate;
 
     @Builder
