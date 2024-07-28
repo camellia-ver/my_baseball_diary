@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class AddUserRequest {
     private String email;
-    private String passwrod;
+    private String password;
     private String userName;
-    private Long favoriteTeamId;
-    private LocalDateTime createDate;
+    private String favoriteTeamId;
 }

@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -24,10 +26,10 @@ public class UserService{
     public Long join(AddUserRequest dto) {
         return userRepository.save(User.builder()
                 .email(dto.getEmail())
-                .password(bCryptPasswordEncoder.encode(dto.getPasswrod()))
+                .password(bCryptPasswordEncoder.encode(dto.getPassword()))
                 .userName(dto.getUserName())
-                .favoriteTeamId(dto.getFavoriteTeamId())
-                .createDate(dto.getCreateDate())
+                .favoriteTeamId(Long.parseLong(dto.getFavoriteTeamId()))
+                .createDate(LocalDateTime.now())
                 .build()).getId();
     }
 }
