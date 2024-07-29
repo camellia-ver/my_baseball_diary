@@ -1,5 +1,3 @@
-body{background: #FFD9C0}
-
 .card{border:none;background:#F4BFBF}
 
 body {
@@ -9,7 +7,8 @@ body {
     height: 100vh;
     margin: 0;
     text-align: center;
-    color:white
+    color:white;
+    background: #FFD9C0;
 }
 
 section{width:50%}
