@@ -15,7 +15,7 @@ import java.util.List;
 public class UserViewCotroller {
     private final BaseballDataService baseballDataService;
 
-    @GetMapping("/login")
+    @GetMapping(value = {"/", "/login"})
     public String login() {
         return "login";
     }

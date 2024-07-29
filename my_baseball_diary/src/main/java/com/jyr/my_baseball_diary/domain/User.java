@@ -28,22 +28,27 @@ public class User implements UserDetails {
     @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(name = "favorite_team_id", nullable = false)
+    @Column(name = "favorite_team_id")
     private Long favoriteTeamId;
 
     @CreatedDate
     @Column(name = "create_dt", nullable = false)
     private LocalDateTime createDate;
 
+    @Column(name = "role", nullable = false)
+    private String role;
+
     private User() {}
 
     @Builder
-    public User(String email, String password, String userName, Long favoriteTeamId, LocalDateTime createDate) {
+    public User(String email, String password, String userName,
+                Long favoriteTeamId, LocalDateTime createDate, String role) {
         this.email = email;
         this.password = password;
         this.userName = userName;
         this.favoriteTeamId = favoriteTeamId;
         this.createDate = createDate;
+        this.role = role;
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -17,8 +18,16 @@ public class UserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public User loadUserByUsername(String email) {
-        return userRepository.findByEmail(email)
+    public UserDetails loadUserByUsername(String email) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException((email)));
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getEmail())
+                .password(user.getPassword())
+                .roles(Arrays.stream(user.getRole().split(","))
+                        .map(String::trim)
+                        .toArray(String[]::new))
+                .build();
     }
 }
