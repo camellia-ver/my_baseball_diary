@@ -1,23 +1,18 @@
 package com.jyr.my_baseball_diary.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Table(name = "members")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Entity
 public class User implements UserDetails {
     @Id
@@ -41,20 +36,18 @@ public class User implements UserDetails {
     @Column(name = "create_dt", nullable = false)
     private LocalDateTime createDate;
 
-    @Builder
-    public User(Long id, String email, String password, String userName,
-                Long favoriteTeamId, LocalDateTime createDate, String auth) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.userName = userName;
-        this.favoriteTeamId = favoriteTeamId;
-        this.createDate = createDate;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("user"));
+        return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override

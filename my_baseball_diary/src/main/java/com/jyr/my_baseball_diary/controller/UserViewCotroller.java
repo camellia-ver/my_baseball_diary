@@ -17,12 +17,12 @@ public class UserViewCotroller {
 
     @GetMapping("/login")
     public String login() {
-        return "user/login";
+        return "login";
     }
 
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("TeamData",baseballDataService.findTeamAll());
-        return "user/signup";
+        return "signup";
     }
 }

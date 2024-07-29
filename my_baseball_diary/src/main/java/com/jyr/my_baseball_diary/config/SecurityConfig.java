@@ -31,10 +31,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/login", "/signup", "/user").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/articlesList", true))
+                        .defaultSuccessUrl("/main", true))
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login")
                         .invalidateHttpSession(true))

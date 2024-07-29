@@ -29,12 +29,4 @@ public class BaseballTeam {
 
     @Column(name = "home_city", nullable = false)
     private String homeCity;
-
-    @Builder
-    public BaseballTeam(String teamName, String logoImage, Year startYear, String homeCity) {
-        this.teamName = teamName;
-        this.logoImage = logoImage;
-        this.startYear = startYear;
-        this.homeCity = homeCity;
-    }
 }
