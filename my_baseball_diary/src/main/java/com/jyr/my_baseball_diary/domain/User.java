@@ -12,7 +12,6 @@ import java.util.*;
 
 @Table(name = "members")
 @Getter
-@Setter
 @Entity
 public class User implements UserDetails {
     @Id
@@ -36,13 +35,16 @@ public class User implements UserDetails {
     @Column(name = "create_dt", nullable = false)
     private LocalDateTime createDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
+    private User() {}
+
+    @Builder
+    public User(String email, String password, String userName, Long favoriteTeamId, LocalDateTime createDate) {
+        this.email = email;
+        this.password = password;
+        this.userName = userName;
+        this.favoriteTeamId = favoriteTeamId;
+        this.createDate = createDate;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

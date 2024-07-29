@@ -22,17 +22,14 @@
                         <div class="mb-3">
                             <label class="form-label">Email address</label>
                             <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
-                            <div id="emailError" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
                             <input type="password" class="form-control" name="password" placeholder="Password" required>
-                            <div id="passwordError" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">사용자명</label>
                             <input type="text" class="form-control" name="userName" placeholder="사용자명" required>
-                            <div id="userNameError" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">응원팀 선택</label>
@@ -40,7 +37,6 @@
                                 <option value="" selected disabled>팀을 선택하세요</option>
                                 <option th:each="item : ${TeamData}" th:value="${item.id}" th:text="${item.teamName}"></option>
                             </select>
-                            <div id="teamSelectError" class="text-danger"></div>
                         </div>
                         <button type="submit" class="btn btn-light" id="sginupBtn">회원가입</button>
                     </form>
