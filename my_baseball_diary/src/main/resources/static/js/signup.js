@@ -8,5 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
                event.preventDefault();
                document.getElementById('teamSelectError').innerText = "팀을 선택해 주세요.";
             }
+
        });
 });

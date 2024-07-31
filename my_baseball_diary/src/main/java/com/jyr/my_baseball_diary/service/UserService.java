@@ -28,4 +28,8 @@ public class UserService{
                 .role("USER")
                 .build()).getId();
     }
+
+    public Boolean checkEmail(String email) {
+        return userRepository.findByEmail(email).isEmpty();
+    }
 }
