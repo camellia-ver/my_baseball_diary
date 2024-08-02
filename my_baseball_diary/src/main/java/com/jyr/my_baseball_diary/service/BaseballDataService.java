@@ -1,7 +1,6 @@
 package com.jyr.my_baseball_diary.service;
 
 import com.jyr.my_baseball_diary.domain.BaseballTeam;
-import com.jyr.my_baseball_diary.dto.AddTeamDataRequest;
 import com.jyr.my_baseball_diary.repository.BaseBallDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

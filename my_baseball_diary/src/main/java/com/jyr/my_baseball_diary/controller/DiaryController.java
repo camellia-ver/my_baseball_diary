@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RequiredArgsConstructor
 @Controller
-public class DiaryViewController {
+public class DiaryController {
     @GetMapping("/main")
     public String mainPage() {
         return "articlesList";

@@ -1,4 +1,4 @@
-package com.jyr.my_baseball_diary.controller;
+package com.jyr.my_baseball_diary.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
