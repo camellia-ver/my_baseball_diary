@@ -24,8 +24,8 @@ section{width:100%}
 
 .card{border:none; background:#F4BFBF}
 
-.no_width{width:100px;}
-.btn-width{width:200px;}
+form{ padding-top:20px;}
+#content{height:400px;}
 
 .btnBox{text-align:right;}
-#writeBtn{margin:10px; width:80px;}
+#saveBtn{margin:10px; width:80px;}

@@ -18,14 +18,13 @@ body{
     padding:5px
 }
 
-.content {padding-top: 50px;padding-left:20px;}
+.content {padding-top: 50px;}
 
 section{width:100%}
 
 .card{border:none; background:#F4BFBF}
 
-.no_width{width:100px;}
-.btn-width{width:200px;}
+.custom-width{width:200px;}
 
 .btnBox{text-align:right;}
 #writeBtn{margin:10px; width:80px;}
