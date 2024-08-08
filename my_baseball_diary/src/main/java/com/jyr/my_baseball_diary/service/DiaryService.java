@@ -3,6 +3,7 @@ package com.jyr.my_baseball_diary.service;
 import com.jyr.my_baseball_diary.domain.Diary;
 import com.jyr.my_baseball_diary.dto.DiaryForm;
 import com.jyr.my_baseball_diary.repository.DiaryRepository;
+import com.jyr.my_baseball_diary.repository.LineUpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +16,10 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class DiaryService {
     private final DiaryRepository diaryRepository;
+    private final LineUpRepository lineUpRepository;
 
-    public Boolean checkDoubleheader() {
-        int num = diaryRepository.findByDate(LocalDate.now()).stream().toList().size();
-        return num == 2;
+    public Integer NumberOfGame() {
+        return lineUpRepository.findByDate(LocalDate.now()).stream().toList().size();
     }
 
     @Transactional
@@ -28,7 +29,7 @@ public class DiaryService {
                 .content(dto.getContent())
                 .mvp(dto.getMvp())
                 .location(dto.getLocation())
-                .date(LocalDateTime.now())
+                .date(LocalDate.now())
                 .note(dto.getNote())
                 .build());
     }

@@ -18,3 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
       });
 });
+
+function showPopupAndRedirect(redirectUrl) {
+    alert("오늘의 경기데이터가 없습니다.");
+    setTimeout(function() {
+        window.location.href = redirectUrl;
+    }, 2000);
+}

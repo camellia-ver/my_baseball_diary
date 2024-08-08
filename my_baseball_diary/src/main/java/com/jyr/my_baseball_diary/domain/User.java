@@ -38,6 +38,9 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     private String role;
 
+    @OneToMany(mappedBy = "user")
+    private List<Diary> diaries;
+
     private User() {}
 
     @Builder

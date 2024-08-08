@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Table(name = "diary")
 @Getter
@@ -28,14 +28,18 @@ public class Diary {
     private String mvp;
 
     @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+    private LocalDate date;
 
     @Column(name = "note")
     private String note;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
     public Diary(String title, String content, String location,
-                 String mvp, LocalDateTime date, String note) {
+                 String mvp, LocalDate date, String note) {
         this.title = title;
         this.content = content;
         this.location = location;

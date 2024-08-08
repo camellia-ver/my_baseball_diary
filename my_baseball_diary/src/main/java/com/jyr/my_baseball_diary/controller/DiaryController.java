@@ -30,9 +30,14 @@ public class DiaryController {
 
     @GetMapping("/writeForm")
     public String writePage(Model model) {
-        model.addAttribute("doubleheader", diaryService.checkDoubleheader());
-        model.addAttribute("lineUp");
-        model.addAttribute("score");
+        Integer numOfGame = diaryService.NumberOfGame();
+        if (numOfGame == 0) {
+            model.addAttribute("showPopup", true);
+            model.addAttribute("redirectUrl", "/main");
+        } else {
+            model.addAttribute("data_num", numOfGame);
+            model.addAttribute("showPopup", false);
+        }
         return "write";
     }
 

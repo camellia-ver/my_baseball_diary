@@ -36,7 +36,14 @@
     </div>
 </nav>
 <section class="content d-flex vh-90">
-    <div class="container-fluid row justify-content-center align-content-center">
+    <div th:if="${showPopup}">
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            showPopupAndRedirect([[${redirectUrl}]]);
+            /*]]>*/
+        </script>
+    </div>
+    <div class="container-fluid row justify-content-center align-content-center"  th:if="${!showPopup}">
         <div class="card">
             <div class = "mb-2 text-center">
                 <form th:action="@{/write}" method="POST" id="writeForm">
@@ -46,8 +53,8 @@
                         <div class="item"><p>삼성 VS ...</p></div>
                         <div class="item"><p>구장</p></div>
                         <div class="item"><p>맑음</p></div>
-                        <div class="item"><p>비고</p></div>
-                        <div class="item">
+                        <div class="item" th:if="${data_num == 2}"><p>비고</p></div>
+                        <div class="item" th:if="${data_num == 2}">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     경기선택
@@ -80,9 +87,9 @@
                             <div class="mb-3">
                                 <p id="line-up-title">Line Up</p>
                                 <table class="table table-striped">
-                                    <tbody id="line-up">
+                                    <tbody>
                                         <tr>
-                                            <th id="line-up-num">1</th>
+                                            <th>1</th>
                                             <th>유격수</th>
                                             <th>abcd</th>
                                         </tr>
@@ -131,6 +138,26 @@
                                             <th></th>
                                             <th></th>
                                         </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-striped">
+                                    <tbody>
+                                    <tr>
+                                        <th>투수</th>
+                                        <th>abc</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
