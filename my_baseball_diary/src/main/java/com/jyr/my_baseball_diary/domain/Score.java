@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.sql.Time;
 import java.time.LocalDate;
 
 @Table(name = "score")
@@ -72,8 +73,8 @@ public class Score {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "note")
-    private String note;
+    @Column(name = "start_game")
+    private Time startGame;
 
     @Builder
     public Score(String gameResult, String teamName,
@@ -81,7 +82,7 @@ public class Score {
                  Integer five, Integer six, Integer seven, Integer eight,
                  Integer nine, Integer ten, Integer eleven, Integer twelve,
                  Integer r, Integer h, Integer e, Integer b, LocalDate date,
-                 String note) {
+                 Time startGame) {
         this.gameResult = gameResult;
         this.teamName = teamName;
         this.one = one;
@@ -101,6 +102,6 @@ public class Score {
         this.e = e;
         this.b = b;
         this.date = date;
-        this.note = note;
+        this.startGame = startGame;
     }
 }
