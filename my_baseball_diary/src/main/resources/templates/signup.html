@@ -35,7 +35,7 @@
                             <label class="form-label">응원팀 선택</label>
                             <select class="form-select" required id="teamSelect" name="favoriteTeamId">
                                 <option value="" selected disabled>팀을 선택하세요</option>
-                                <option th:each="item : ${TeamData}" th:value="${item.id}" th:text="${item.teamName}"></option>
+                                <option th:each="item : ${TeamData}" th:value="${item.teamName}" th:text="${item.teamName}"></option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-light" id="sginupBtn">회원가입</button>

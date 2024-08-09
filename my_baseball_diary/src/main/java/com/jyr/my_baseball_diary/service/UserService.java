@@ -25,7 +25,7 @@ public class UserService{
                 .email(dto.getEmail())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
                 .userName(dto.getUserName())
-                .favoriteTeamId(Long.parseLong(dto.getFavoriteTeamId()))
+                .favoriteTeam(dto.getFavoriteTeam())
                 .createDate(LocalDateTime.now())
                 .role("USER")
                 .build()).getId();

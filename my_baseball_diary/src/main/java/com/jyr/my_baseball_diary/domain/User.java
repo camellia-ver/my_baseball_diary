@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Table(name = "members")
+@Table(name = "users")
 @Getter
 @Entity
 public class User implements UserDetails {
@@ -28,8 +28,8 @@ public class User implements UserDetails {
     @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(name = "favorite_team_id")
-    private Long favoriteTeamId;
+    @Column(name = "favorite_team")
+    private String favoriteTeam;
 
     @CreatedDate
     @Column(name = "create_dt", nullable = false)
@@ -45,11 +45,11 @@ public class User implements UserDetails {
 
     @Builder
     public User(String email, String password, String userName,
-                Long favoriteTeamId, LocalDateTime createDate, String role) {
+                String favoriteTeam, LocalDateTime createDate, String role) {
         this.email = email;
         this.password = password;
         this.userName = userName;
-        this.favoriteTeamId = favoriteTeamId;
+        this.favoriteTeam = favoriteTeam;
         this.createDate = createDate;
         this.role = role;
     }

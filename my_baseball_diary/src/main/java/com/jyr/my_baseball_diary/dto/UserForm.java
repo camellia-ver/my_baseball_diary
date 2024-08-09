@@ -9,5 +9,5 @@ public class UserForm {
     private String email;
     private String password;
     private String userName;
-    private String favoriteTeamId;
+    private String favoriteTeam;
 }
