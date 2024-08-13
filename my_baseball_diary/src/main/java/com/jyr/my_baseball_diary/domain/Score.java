@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.sql.Time;
 import java.time.LocalDate;
 
-@Table(name = "score")
+@Table(name = "game_data")
 @Getter
 @Entity
 public class Score {
@@ -21,6 +21,12 @@ public class Score {
 
     @Column(name = "team_name", updatable = false)
     private String teamName;
+
+    @Column(name = "home_or_away", updatable = false)
+    private String homeOrAway;
+
+    @Column(name = "stadium", updatable = false)
+    private String stadium;
 
     @Column(name = "one")
     private Integer one;
@@ -77,14 +83,16 @@ public class Score {
     private Time startGame;
 
     @Builder
-    public Score(String gameResult, String teamName,
-                 Integer one, Integer two, Integer three, Integer four,
-                 Integer five, Integer six, Integer seven, Integer eight,
-                 Integer nine, Integer ten, Integer eleven, Integer twelve,
-                 Integer r, Integer h, Integer e, Integer b, LocalDate date,
-                 Time startGame) {
+    public Score(String gameResult, String teamName,String homeOrAway,
+                 String stadium, Integer one, Integer two, Integer three,
+                 Integer four, Integer five, Integer six, Integer seven,
+                 Integer eight, Integer nine, Integer ten, Integer eleven,
+                 Integer twelve, Integer r, Integer h, Integer e, Integer b,
+                 LocalDate date, Time startGame) {
         this.gameResult = gameResult;
         this.teamName = teamName;
+        this.homeOrAway = homeOrAway;
+        this.stadium = stadium;
         this.one = one;
         this.two = two;
         this.three = three;
