@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -30,14 +31,16 @@ public class DiaryController {
 
     @GetMapping("/writeForm")
     public String writePage(Model model) {
-        Integer numOfGame = diaryService.NumberOfGame();
-        if (numOfGame == 0) {
-            model.addAttribute("showPopup", true);
-            model.addAttribute("redirectUrl", "/main");
-        } else {
-            model.addAttribute("data_num", numOfGame);
-            model.addAttribute("showPopup", false);
-        }
+//        Integer numOfGame = diaryService.NumberOfGame();
+//        if (numOfGame == 0) {
+//            model.addAttribute("showPopup", true);
+//            model.addAttribute("redirectUrl", "/main");
+//        } else {
+//            model.addAttribute("data_num", numOfGame);
+//            model.addAttribute("showPopup", false);
+//        }
+        LocalDate date = LocalDate.now();
+
         return "write";
     }
 

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Table(name = "game_data")
 @Getter
 @Entity
-public class Score {
+public class GameData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
@@ -83,12 +83,12 @@ public class Score {
     private Time startGame;
 
     @Builder
-    public Score(String gameResult, String teamName,String homeOrAway,
-                 String stadium, Integer one, Integer two, Integer three,
-                 Integer four, Integer five, Integer six, Integer seven,
-                 Integer eight, Integer nine, Integer ten, Integer eleven,
-                 Integer twelve, Integer r, Integer h, Integer e, Integer b,
-                 LocalDate date, Time startGame) {
+    public GameData(String gameResult, String teamName, String homeOrAway,
+                    String stadium, Integer one, Integer two, Integer three,
+                    Integer four, Integer five, Integer six, Integer seven,
+                    Integer eight, Integer nine, Integer ten, Integer eleven,
+                    Integer twelve, Integer r, Integer h, Integer e, Integer b,
+                    LocalDate date, Time startGame) {
         this.gameResult = gameResult;
         this.teamName = teamName;
         this.homeOrAway = homeOrAway;

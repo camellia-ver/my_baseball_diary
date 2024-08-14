@@ -36,20 +36,20 @@
     </div>
 </nav>
 <section class="content d-flex vh-90">
-    <div th:if="${showPopup}">
-        <script th:inline="javascript">
-            /*<![CDATA[*/
-            showPopupAndRedirect([[${redirectUrl}]]);
-            /*]]>*/
-        </script>
-    </div>
+<!--    <div th:if="${showPopup}">-->
+<!--        <script th:inline="javascript">-->
+<!--            /*<![CDATA[*/-->
+<!--            showPopupAndRedirect([[${redirectUrl}]]);-->
+<!--            /*]]>*/-->
+<!--        </script>-->
+<!--    </div>-->
     <div class="container-fluid row justify-content-center align-content-center"  th:if="${!showPopup}">
         <div class="card">
             <div class = "mb-2 text-center">
                 <form th:action="@{/write}" method="POST" id="writeForm">
                     <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
                     <div class="mb-3" id="data_one">
-                        <div class="item"><input type="date" id="date"></div>
+                        <div class="item"><input type="date" id="date" value=""></div>
                         <div class="item"><p>삼성 VS ...</p></div>
                         <div class="item"><p>구장</p></div>
                         <div class="item"><p>맑음</p></div>
