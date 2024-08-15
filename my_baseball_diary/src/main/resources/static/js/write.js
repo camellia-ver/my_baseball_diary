@@ -12,8 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showPopupAndRedirect(redirectUrl) {
-    alert("일지를 작성 가능한 경기데이터가 없습니다.");
-    setTimeout(function() {
-        window.location.href = redirectUrl;
-    }, 2000);
+    const result = confirm("오늘의 경기가 존재하지 않습니다. 이전 경기의 정보를 가져 오시겠습니까?");
+
+    if (!result) {
+        setTimeout(() => {
+            window.location.href = redirectUrl;
+        }, 2000);
+    }
 }

@@ -34,6 +34,8 @@ public class LineUp {
     @Column(name = "start_game")
     private Time startGame;
 
+    private LineUp() {}
+
     @Builder
     public LineUp(String teamName, Integer no, String position, String playerName,
                   LocalDate date, Time startGame) {

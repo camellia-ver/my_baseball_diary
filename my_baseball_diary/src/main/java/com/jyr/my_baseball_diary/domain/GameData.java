@@ -82,6 +82,8 @@ public class GameData {
     @Column(name = "start_game")
     private Time startGame;
 
+    private GameData() {}
+
     @Builder
     public GameData(String gameResult, String teamName, String homeOrAway,
                     String stadium, Integer one, Integer two, Integer three,

@@ -36,13 +36,13 @@
     </div>
 </nav>
 <section class="content d-flex vh-90">
-<!--    <div th:if="${showPopup}">-->
-<!--        <script th:inline="javascript">-->
-<!--            /*<![CDATA[*/-->
-<!--            showPopupAndRedirect([[${redirectUrl}]]);-->
-<!--            /*]]>*/-->
-<!--        </script>-->
-<!--    </div>-->
+    <div th:if="${showPopup}">
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            showPopupAndRedirect([[${redirectUrl}]]);
+            /*]]>*/
+        </script>
+    </div>
     <div class="container-fluid row justify-content-center align-content-center"  th:if="${!showPopup}">
         <div class="card">
             <div class = "mb-2 text-center">
