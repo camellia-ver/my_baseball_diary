@@ -79,8 +79,11 @@ public class GameData {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "start_game")
+    @Column(name = "start_game", nullable = false)
     private Time startGame;
+
+    @Column(name = "match_team", nullable = false)
+    private String matchTeam;
 
     private GameData() {}
 
@@ -90,7 +93,7 @@ public class GameData {
                     Integer four, Integer five, Integer six, Integer seven,
                     Integer eight, Integer nine, Integer ten, Integer eleven,
                     Integer twelve, Integer r, Integer h, Integer e, Integer b,
-                    LocalDate date, Time startGame) {
+                    LocalDate date, Time startGame,String matchTeam) {
         this.gameResult = gameResult;
         this.teamName = teamName;
         this.homeOrAway = homeOrAway;
@@ -113,5 +116,6 @@ public class GameData {
         this.b = b;
         this.date = date;
         this.startGame = startGame;
+        this.matchTeam = matchTeam;
     }
 }

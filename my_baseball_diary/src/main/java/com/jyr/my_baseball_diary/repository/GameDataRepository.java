@@ -11,4 +11,8 @@ import java.util.Optional;
 @Repository
 public interface GameDataRepository extends JpaRepository<GameData, Long> {
     List<GameData> findByDate(LocalDate date);
+
+    Boolean existsByDate(LocalDate date);
+
+    LocalDate findTopByOrderByDateDesc();
 }

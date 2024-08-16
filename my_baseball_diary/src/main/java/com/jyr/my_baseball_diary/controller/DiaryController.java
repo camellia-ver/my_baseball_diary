@@ -1,5 +1,6 @@
 package com.jyr.my_baseball_diary.controller;
 
+import com.jyr.my_baseball_diary.domain.Diary;
 import com.jyr.my_baseball_diary.domain.GameData;
 import com.jyr.my_baseball_diary.domain.LineUp;
 import com.jyr.my_baseball_diary.domain.User;
@@ -41,27 +42,27 @@ public class DiaryController {
     public String writePage(Model model,@AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
         User user = userService.findByUser(email);
+        String favoriteTeam = user.getFavoriteTeam();
 
-        boolean isTodayData = true;
+        LocalDate latestDateWithGameData = diaryService.findLatestDateWithGameData();
         LocalDate date = LocalDate.now();
 
-        while (!diaryService.isGameData(date)) {
-            date = date.minusDays(1);
-            isTodayData = false;
+        if (date.isAfter(latestDateWithGameData)) {
+            date = latestDateWithGameData;
         }
-        System.out.println(user.getFavoriteTeam());
-        List<LineUp> lineUp = diaryService.findLineUp(date,user.getFavoriteTeam());
-        GameData gameData = diaryService.findGameData(date, user.getFavoriteTeam());
+
+        boolean isTodayData = date.equals(LocalDate.now());
+
+        List<LineUp> lineUp = diaryService.findLineUp(date,favoriteTeam);
+        GameData gameData = diaryService.findGameData(date, favoriteTeam);
+        boolean isDoubleHeader = diaryService.isDoubleHeader(date,favoriteTeam);
 
         model.addAttribute("showPopup", isTodayData);
         model.addAttribute("redirectUrl", "main");
+        model.addAttribute("doubleHeader", isDoubleHeader);
         model.addAttribute("lineUp", lineUp);
         model.addAttribute("gameData", gameData);
-
-        if (diaryService.isDiary(date))
-        {
-            model.addAttribute("diaryContent",diaryService.findDiaryData(date));
-        }
+        model.addAttribute("diaryContent",diaryService.findDiaryData(date,email));
 
         return "write";
     }

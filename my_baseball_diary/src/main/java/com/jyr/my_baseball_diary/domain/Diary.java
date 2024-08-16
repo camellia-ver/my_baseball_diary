@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.sql.Time;
 import java.time.LocalDate;
 
 @Table(name = "diary")
@@ -30,21 +31,26 @@ public class Diary {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "note")
-    private String note;
+    @Column(name = "start_game", nullable = false)
+    private Time startGame;
+
+    @Column(name = "game_date", nullable = false)
+    private LocalDate gameDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    public Diary(String title, String content, String location,
-                 String mvp, LocalDate date, String note) {
+    public Diary(String title, String content, String location, String mvp,
+                 LocalDate date, Time startGame, LocalDate gameDate, User user) {
         this.title = title;
         this.content = content;
         this.location = location;
         this.mvp = mvp;
         this.date = date;
-        this.note = note;
+        this.startGame = startGame;
+        this.gameDate = gameDate;
+        this.user = user;
     }
 }
