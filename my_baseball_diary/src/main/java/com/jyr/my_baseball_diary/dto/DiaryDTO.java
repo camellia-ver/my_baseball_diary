@@ -11,7 +11,6 @@ import java.time.LocalDate;
 public class DiaryDTO {
     String title;
     String content;
-    String location;
     String mvp;
     LocalDate gameDate;
     String startGame;

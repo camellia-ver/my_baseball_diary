@@ -22,9 +22,6 @@ public class Diary {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "location")
-    private String location;
-
     @Column(name = "mvp")
     private String mvp;
 
@@ -42,11 +39,10 @@ public class Diary {
     private User user;
 
     @Builder
-    public Diary(String title, String content, String location, String mvp,
-                 LocalDate date, Time startGame, LocalDate gameDate, User user) {
+    public Diary(String title, String content, String mvp, LocalDate date,
+                 Time startGame, LocalDate gameDate, User user) {
         this.title = title;
         this.content = content;
-        this.location = location;
         this.mvp = mvp;
         this.date = date;
         this.startGame = startGame;

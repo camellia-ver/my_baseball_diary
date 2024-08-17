@@ -18,6 +18,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     dateInput.addEventListener('change', function(event) {
         var selectedDate = event.target.value;
-
     });
 });

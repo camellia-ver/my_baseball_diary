@@ -43,16 +43,11 @@
                     <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
                     <div class="mb-3" id="data_one">
                         <div class="item"><input type="date" id="date" value="" name="gameDate"></div>
-                        <div class="item" th:if="${todayGame}"><p>경기시간</p></div>
-<!--                        <input type="hidden" name="startGame" th:value=""/>-->
-                        <input type="hidden" name="startGame" value="15:40"/>
-
-                        <div class="item" th:if="${todayGame}"><p>삼성 VS ...</p></div>
-                        <div class="item" th:if="${todayGame}"><p>구장</p></div>
-<!--                        <input type="hidden" name="location" th:value=""/>-->
-                        <input type="hidden" name="location" value="someValue"/>
-
-                        <div class="item" th:if="${todayGame}"><p>맑음</p></div>
+                        <div class="item" th:if="${todayGame}" th:text="${gameData.startGame}"><p></p></div>
+                        <input type="hidden" name="startGame" th:value="${gameData.startGame}" th:if="${todayGame}" />
+                        <input type="hidden" name="startGame" value=""/>
+                        <div class="item" th:if="${todayGame}" th:text="${gameData.teamName} VS ${gameData.matchTeam}"><p></p></div>
+                        <div class="item" th:if="${todayGame}" th:text="${gameData.stadium}"><p></p></div>
                         <div class="item" th:if="${todayGame} and ${doubleHeader}"><p>비고</p></div>
                         <div class="item" th:if="${todayGame} and ${doubleHeader}">
                             <div class="dropdown">
@@ -69,95 +64,25 @@
                     <div class="mb-3">
                         <input type="text" class="form-control" placeholder="제목을 입력해주세요." required id="title" name="title">
                     </div>
-                    <div class="mb-3" id="data_two">
-                        <div class="item" id="radio-area" th:if="${todayGame}">
-                            <p class="form-check-inline">관전장소:</p>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="homeRadio" value="home">
-                                <label class="form-check-label" for="homeRadio">중계</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="stadiumRadio" value="stadium">
-                                <label class="form-check-label" for="stadiumRadio">직관</label>
-                            </div>
-                        </div>
-                    </div>
                     <div class="mb-3" id="content-area">
                         <div class="mb-3" id="left-area" th:if="${todayGame}">
                             <div class="mb-3">
                                 <p id="line-up-title">Line Up</p>
                                 <table class="table table-striped">
                                     <tbody>
-                                        <tr>
-                                            <th>1</th>
-                                            <th>유격수</th>
-                                            <th>abcd</th>
-                                        </tr>
-                                        <tr>
-                                            <th>1</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <th>1</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <th>1</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <th>1</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <th>1</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <th>1</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <th>1</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <th>1</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <th>1</th>
-                                            <th></th>
-                                            <th></th>
+                                        <tr th:each="item : ${hList}">
+                                            <td th:text="${item.no}"></td>
+                                            <td th:text="${item.position}"></td>
+                                            <td th:text="${item.playerName}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <table class="table table-striped">
                                     <tbody>
-                                    <tr>
-                                        <th>투수</th>
-                                        <th>abc</th>
-                                    </tr>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
+                                        <tr th:each="item : ${pList}">
+                                            <td th:text="${item.position}"></td>
+                                            <td th:text="${item.playerName}"></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -165,7 +90,7 @@
                                 <input type="text" class="form-control" placeholder="MVP를 입력해주세요." required id="mvp" name="mvp">
                             </div>
                         </div>
-                        <input type="hidden" name="mvp" value="someValue" th:if="${!todayGame}"/>
+                        <input type="hidden" name="mvp" value="" th:if="${!todayGame}"/>
                         <div class="mb-3" id="right-area">
                             <div class="mb-3" th:if="${todayGame}">
                                 <table class="table table-striped">
@@ -193,44 +118,44 @@
                                     </thead>
                                     <tbody id="">
                                     <tr>
-                                        <th>win</th>
-                                        <th>abc</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
+                                        <th th:text="${gameDataTeam1.gameResult}"></th>
+                                        <th th:text="${gameDataTeam1.teamName}"></th>
+                                        <th th:text="${gameDataTeam1.one != null ? gameDataTeam1.one : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.two != null ? gameDataTeam1.two : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.three != null ? gameDataTeam1.three : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.four != null ? gameDataTeam1.four : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.five != null ? gameDataTeam1.five : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.six != null ? gameDataTeam1.six : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.seven != null ? gameDataTeam1.seven : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.eight != null ? gameDataTeam1.eight : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.nine != null ? gameDataTeam1.nine : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.ten != null ? gameDataTeam1.ten : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.eleven != null ? gameDataTeam1.eleven : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.twelve != null ? gameDataTeam1.twelve : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.r != null ? gameDataTeam1.r : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.h != null ? gameDataTeam1.h : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.e != null ? gameDataTeam1.e : '-'}"></th>
+                                        <th th:text="${gameDataTeam1.b != null ? gameDataTeam1.b : '-'}"></th>
                                     </tr>
                                     <tr>
-                                        <th>LOSE</th>
-                                        <th>abc</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
-                                        <th>1</th>
+                                        <th th:text="${gameDataTeam2.gameResult}"></th>
+                                        <th th:text="${gameDataTeam2.teamName}"></th>
+                                        <th th:text="${gameDataTeam2.one != null ? gameDataTeam2.one : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.two != null ? gameDataTeam2.two : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.three != null ? gameDataTeam2.three : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.four != null ? gameDataTeam2.four : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.five != null ? gameDataTeam2.five : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.six != null ? gameDataTeam2.six : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.seven != null ? gameDataTeam2.seven : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.eight != null ? gameDataTeam2.eight : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.nine != null ? gameDataTeam2.nine : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.ten != null ? gameDataTeam2.ten : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.eleven != null ? gameDataTeam2.eleven : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.twelve != null ? gameDataTeam2.twelve : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.r != null ? gameDataTeam2.r : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.h != null ? gameDataTeam2.h : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.e != null ? gameDataTeam2.e : '-'}"></th>
+                                        <th th:text="${gameDataTeam2.b != null ? gameDataTeam2.b : '-'}"></th>
                                     </tr>
                                     </tbody>
                                 </table>

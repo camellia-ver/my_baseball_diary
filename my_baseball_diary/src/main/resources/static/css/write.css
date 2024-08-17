@@ -30,7 +30,6 @@ section.content {
 
 form{ padding-top:20px;}
 #data_one{display:flex;}
-#data_two{text-align:left}
 .item{margin-right: 10px;font-size: 20px;}
 #homeRadio,#stadiumRadio{font-size: 15px;}
 #content-area{display: flex;}

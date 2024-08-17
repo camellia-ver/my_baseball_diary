@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -53,14 +54,16 @@ public class DiaryController {
         Diary diary;
 
         if (isTodayData) {
-            List<LineUp> lineUp = diaryService.findLineUp(date, favoriteTeam);
-            GameData gameData = diaryService.findGameData(date, favoriteTeam);
+            Map<String, List<LineUp>> lineUp = diaryService.findLineUp(date, favoriteTeam);
+            Map<String,GameData> gameData = diaryService.findGameData(date, favoriteTeam);
             boolean isDoubleHeader = diaryService.isDoubleHeader(date, favoriteTeam);
             diary = diaryService.findGameDayDiaryData(date, email);
 
             model.addAttribute("doubleHeader", isDoubleHeader);
-            model.addAttribute("lineUp", lineUp);
-            model.addAttribute("gameData", gameData);
+            model.addAttribute("pList", lineUp.get("pitcher"));
+            model.addAttribute("hList", lineUp.get("hitter"));
+            model.addAttribute("gameDataTeam1", gameData.get("team1"));
+            model.addAttribute("gameDataTeam2", gameData.get("team2"));
         } else {
             diary = diaryService.findNoGameDayDiaryData(date,email);
         }
