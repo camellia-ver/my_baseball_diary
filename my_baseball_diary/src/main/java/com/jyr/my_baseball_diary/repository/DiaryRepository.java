@@ -1,8 +1,8 @@
 package com.jyr.my_baseball_diary.repository;
 
 import com.jyr.my_baseball_diary.domain.Diary;
-import com.jyr.my_baseball_diary.domain.LineUp;
-import com.jyr.my_baseball_diary.domain.User;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-    List<Diary> findByDate(LocalDate date);
+    @Query("SELECT d FROM Diary d WHERE d.date = :date")
+    List<Diary> findByDate(@Param("date") LocalDate date);
 }

@@ -2,7 +2,7 @@ package com.jyr.my_baseball_diary.controller;
 
 import com.jyr.my_baseball_diary.service.BaseballDataService;
 import com.jyr.my_baseball_diary.service.UserService;
-import com.jyr.my_baseball_diary.dto.UserForm;
+import com.jyr.my_baseball_diary.dto.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class UserCotroller {
     }
 
     @PostMapping("/user")
-    public String signup(UserForm request, Model model) {
+    public String signup(UserDTO request, Model model) {
         try {
             userService.join(request);
         } catch (IllegalStateException e) {

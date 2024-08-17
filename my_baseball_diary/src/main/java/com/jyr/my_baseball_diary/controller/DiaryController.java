@@ -4,8 +4,7 @@ import com.jyr.my_baseball_diary.domain.Diary;
 import com.jyr.my_baseball_diary.domain.GameData;
 import com.jyr.my_baseball_diary.domain.LineUp;
 import com.jyr.my_baseball_diary.domain.User;
-import com.jyr.my_baseball_diary.dto.DiaryForm;
-import com.jyr.my_baseball_diary.repository.DiaryRepository;
+import com.jyr.my_baseball_diary.dto.DiaryDTO;
 import com.jyr.my_baseball_diary.service.DiaryService;
 import com.jyr.my_baseball_diary.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -52,25 +50,31 @@ public class DiaryController {
         }
 
         boolean isTodayData = date.equals(LocalDate.now());
+        Diary diary;
 
-        List<LineUp> lineUp = diaryService.findLineUp(date,favoriteTeam);
-        GameData gameData = diaryService.findGameData(date, favoriteTeam);
-        boolean isDoubleHeader = diaryService.isDoubleHeader(date,favoriteTeam);
+        if (isTodayData) {
+            List<LineUp> lineUp = diaryService.findLineUp(date, favoriteTeam);
+            GameData gameData = diaryService.findGameData(date, favoriteTeam);
+            boolean isDoubleHeader = diaryService.isDoubleHeader(date, favoriteTeam);
+            diary = diaryService.findGameDayDiaryData(date, email);
 
-        model.addAttribute("showPopup", isTodayData);
-        model.addAttribute("redirectUrl", "main");
-        model.addAttribute("doubleHeader", isDoubleHeader);
-        model.addAttribute("lineUp", lineUp);
-        model.addAttribute("gameData", gameData);
-        model.addAttribute("diaryContent",diaryService.findDiaryData(date,email));
+            model.addAttribute("doubleHeader", isDoubleHeader);
+            model.addAttribute("lineUp", lineUp);
+            model.addAttribute("gameData", gameData);
+        } else {
+            diary = diaryService.findNoGameDayDiaryData(date,email);
+        }
+
+        model.addAttribute("todayGame", isTodayData);
+        model.addAttribute("diaryContent",diary);
 
         return "write";
     }
 
     @PostMapping("/write")
-    public String write(DiaryForm request) {
+    public String write(DiaryDTO request) {
         diaryService.save(request);
-        return "redirect:/articlesList";
+        return "redirect:/main";
     }
 
     @GetMapping("/admin/test")

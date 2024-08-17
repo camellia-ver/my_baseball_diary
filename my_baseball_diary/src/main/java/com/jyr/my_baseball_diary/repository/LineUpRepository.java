@@ -1,16 +1,17 @@
 package com.jyr.my_baseball_diary.repository;
 
-import com.jyr.my_baseball_diary.domain.Diary;
 import com.jyr.my_baseball_diary.domain.LineUp;
-import com.jyr.my_baseball_diary.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface LineUpRepository extends JpaRepository<LineUp, Long> {
-    List<LineUp> findByDate(LocalDate date);
+    @Query("SELECT l FROM LineUp l WHERE l.date = :date")
+    List<LineUp> findByDate(@Param("date") LocalDate date);
+
 }

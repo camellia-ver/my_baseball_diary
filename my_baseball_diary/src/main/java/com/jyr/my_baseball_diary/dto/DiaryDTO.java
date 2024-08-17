@@ -8,11 +8,11 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class DiaryForm {
+public class DiaryDTO {
     String title;
     String content;
     String location;
     String mvp;
     LocalDate gameDate;
-    Time startGame;
+    String startGame;
 }

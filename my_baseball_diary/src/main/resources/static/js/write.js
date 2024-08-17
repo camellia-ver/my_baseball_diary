@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
+    var dateInput = document.getElementById('date');
+    var today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+
     var simplemde = new SimpleMDE({
         element: document.getElementById("markdown-editor"),
         spellChecker: false,
@@ -9,14 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
           "preview", "side-by-side", "fullscreen"
         ]
       });
+
+    var dateInput = document.getElementById('date');
+
+    dateInput.addEventListener('change', function(event) {
+        var selectedDate = event.target.value;
+
+    });
 });
-
-function showPopupAndRedirect(redirectUrl) {
-    const result = confirm("오늘의 경기가 존재하지 않습니다. 이전 경기의 정보를 가져 오시겠습니까?");
-
-    if (!result) {
-        setTimeout(() => {
-            window.location.href = redirectUrl;
-        }, 2000);
-    }
-}

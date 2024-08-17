@@ -2,7 +2,7 @@ package com.jyr.my_baseball_diary.service;
 
 import com.jyr.my_baseball_diary.domain.User;
 import com.jyr.my_baseball_diary.repository.UserRepository;
-import com.jyr.my_baseball_diary.dto.UserForm;
+import com.jyr.my_baseball_diary.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -20,7 +19,7 @@ public class UserService{
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public Long join(UserForm dto) {
+    public Long join(UserDTO dto) {
         validateDuplicateUser(dto.getEmail());
         return userRepository.save(User.builder()
                 .email(dto.getEmail())

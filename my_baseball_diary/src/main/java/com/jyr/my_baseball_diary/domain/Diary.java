@@ -22,19 +22,19 @@ public class Diary {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "location", nullable = false)
+    @Column(name = "location")
     private String location;
 
-    @Column(name = "mvp", nullable = false)
+    @Column(name = "mvp")
     private String mvp;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "start_game", nullable = false)
+    @Column(name = "start_game")
     private Time startGame;
 
-    @Column(name = "game_date", nullable = false)
+    @Column(name = "game_date")
     private LocalDate gameDate;
 
     @ManyToOne
