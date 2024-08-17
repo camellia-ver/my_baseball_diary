@@ -38,6 +38,8 @@ public class Diary {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private Diary() {}
+
     @Builder
     public Diary(String title, String content, String mvp, LocalDate date,
                  Time startGame, LocalDate gameDate, User user) {

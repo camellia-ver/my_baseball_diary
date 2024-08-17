@@ -18,11 +18,18 @@ body{
     padding:5px
 }
 
-.content {padding-top: 50px;padding-left:20px;overflow: auto;}
+.content {padding-left:20px;overflow: auto;}
+
+.padding-large {
+    padding-top: 300px;
+}
+
+.padding-small {
+    padding-top: 100px;
+}
 
 section{width:100%}
 section.content {
-    padding-top: 300px;
     padding-bottom:20px;
 }
 

@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -110,7 +109,6 @@ public class DiaryService {
         Map<String, GameData> result = new LinkedHashMap<>();
 
         if (teamData != null) {
-            // 팀 데이터 설정
             result.put("team1", teamData);
 
             String matchTeam = teamData.getMatchTeam();
@@ -128,9 +126,9 @@ public class DiaryService {
         return result;
     }
 
-    public Diary findGameDayDiaryData(LocalDate date, String email) {
-        return diaryRepository.findByDate(date).stream()
-                .filter(diary -> diary.getUser().getEmail().equals(email))
+    public Diary findGameDayDiaryData(LocalDate date, Long userId) {
+        return diaryRepository.findByGameDate(date).stream()
+                .filter(diary -> diary.getUser().getId().equals(userId))
                 .filter(diary -> diary.getStartGame() != null)
                 .min(Comparator.comparing(Diary::getStartGame))
                 .orElse(null);
@@ -142,9 +140,9 @@ public class DiaryService {
     }
 
 
-    public Diary findNoGameDayDiaryData(LocalDate date, String email) {
-        return diaryRepository.findByDate(date).stream()
-                .filter(diary -> diary.getUser().getEmail().equals(email))
+    public Diary findNoGameDayDiaryData(LocalDate date, Long userId) {
+        return diaryRepository.findByGameDate(date).stream()
+                .filter(diary -> diary.getUser().getId().equals(userId))
                 .filter(diary -> diary.getStartGame() == null)
                 .findFirst()
                 .orElse(null);

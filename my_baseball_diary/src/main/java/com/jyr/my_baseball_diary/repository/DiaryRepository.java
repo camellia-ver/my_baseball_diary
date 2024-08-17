@@ -12,6 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-    @Query("SELECT d FROM Diary d WHERE d.date = :date")
-    List<Diary> findByDate(@Param("date") LocalDate date);
+    @Query("SELECT d FROM Diary d WHERE d.gameDate = :date")
+    List<Diary> findByGameDate(@Param("date") LocalDate date);
 }

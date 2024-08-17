@@ -35,7 +35,7 @@
         </ul>
     </div>
 </nav>
-<section class="content d-flex vh-90">
+<section class="content d-flex vh-90" th:classappend="${todayGame ? ' padding-large' : ' padding-small'}">
     <div class="container-fluid row justify-content-center align-content-center">
         <div class="card">
             <div class = "mb-2 text-center">
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="제목을 입력해주세요." required id="title" name="title">
+                        <input type="text" class="form-control" placeholder="제목을 입력해주세요." required id="title" name="title" th:value="${diaryContent != null ? diaryContent.title : ''}">
                     </div>
                     <div class="mb-3" id="content-area">
                         <div class="mb-3" id="left-area" th:if="${todayGame}">
@@ -161,7 +161,7 @@
                                 </table>
                             </div>
                             <div class="mb-3">
-                                <textarea class="form-control" placeholder="내용을 입력해주세요." id="markdown-editor" name="content" style="visibility: hidden;"></textarea>
+                                <textarea class="form-control" placeholder="내용을 입력해주세요." id="markdown-editor" name="content" style="visibility: hidden;" th:text="${diaryContent != null ? diaryContent.content : ''}"></textarea>
                             </div>
                         </div>
                     </div>

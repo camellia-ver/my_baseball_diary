@@ -42,22 +42,19 @@ public class DiaryController {
         String email = userDetails.getUsername();
         User user = userService.findByUser(email);
         String favoriteTeam = user.getFavoriteTeam();
+        Long userId = user.getId();
 
         LocalDate latestDateWithGameData = diaryService.findLatestDateWithGameData();
         LocalDate date = LocalDate.now();
 
-        if (date.isAfter(latestDateWithGameData)) {
-            date = latestDateWithGameData;
-        }
-
-        boolean isTodayData = date.equals(LocalDate.now());
+        boolean isTodayData = latestDateWithGameData.equals(date);
         Diary diary;
 
         if (isTodayData) {
             Map<String, List<LineUp>> lineUp = diaryService.findLineUp(date, favoriteTeam);
             Map<String,GameData> gameData = diaryService.findGameData(date, favoriteTeam);
             boolean isDoubleHeader = diaryService.isDoubleHeader(date, favoriteTeam);
-            diary = diaryService.findGameDayDiaryData(date, email);
+            diary = diaryService.findGameDayDiaryData(date, userId);
 
             model.addAttribute("doubleHeader", isDoubleHeader);
             model.addAttribute("pList", lineUp.get("pitcher"));
@@ -65,7 +62,7 @@ public class DiaryController {
             model.addAttribute("gameDataTeam1", gameData.get("team1"));
             model.addAttribute("gameDataTeam2", gameData.get("team2"));
         } else {
-            diary = diaryService.findNoGameDayDiaryData(date,email);
+            diary = diaryService.findNoGameDayDiaryData(date,userId);
         }
 
         model.addAttribute("todayGame", isTodayData);
