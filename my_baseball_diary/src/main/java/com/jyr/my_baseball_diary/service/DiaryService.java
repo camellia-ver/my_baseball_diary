@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,37 +36,41 @@ public class DiaryService {
 
     @Transactional
     public void save(DiaryDTO dto) {
-        Time time = null;
+        Time startGameTime = parseStartGameTime(dto.getStartGame().replace(",",""));
 
-        if (!dto.getStartGame().isEmpty()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime localTime = LocalTime.parse(dto.getStartGame(), formatter);
-            time = Time.valueOf(localTime);
-        }
-
-        diaryRepository.save(Diary.builder()
+        Diary diary = Diary.builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .mvp(dto.getMvp())
                 .date(LocalDateTime.now())
-                .startGame(time)
+                .startGame(startGameTime)
                 .gameDate(dto.getGameDate())
                 .user(getCurrentUser().orElse(null))
-                .build());
+                .build();
+
+        diaryRepository.save(diary);
     }
 
     @Transactional
     public void update(DiaryDTO dto) {
-        Time time = null;
+        Time startGameTime = parseStartGameTime(dto.getStartGame().replace(",",""));
 
-        if (!dto.getStartGame().isEmpty()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime localTime = LocalTime.parse(dto.getStartGame(), formatter);
-            time = Time.valueOf(localTime);
+        diaryRepository.updateDiary(dto.getId(), dto.getTitle(), dto.getContent(),
+                dto.getMvp(), LocalDateTime.now(), startGameTime, dto.getGameDate());
+    }
+
+    private Time parseStartGameTime(String startGame) {
+        if (startGame == null || startGame.isEmpty()) {
+            return null;
         }
 
-        diaryRepository.updateDiary(dto.getId(),dto.getTitle(),dto.getContent(),
-                dto.getMvp(), LocalDateTime.now(),time,dto.getGameDate());
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            LocalTime localTime = LocalTime.parse(startGame, formatter);
+            return Time.valueOf(localTime);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("잘못된 시간 형식: " + startGame, e);
+        }
     }
 
     public Optional<User> getCurrentUser() {
@@ -139,24 +144,22 @@ public class DiaryService {
         return result;
     }
 
-    public Diary findGameDayDiaryData(LocalDate date, Long userId) {
-        return diaryRepository.findByGameDate(date).stream()
-                .filter(diary -> diary.getUser().getId().equals(userId))
-                .filter(diary -> diary.getStartGame() != null)
-                .min(Comparator.comparing(Diary::getStartGame))
-                .orElse(null);
-    }
-
     public LocalDate findLatestDateWithGameData() {
         List<LocalDate> dates = gameDataRepository.findTopDates();
         return dates.isEmpty() ? null : dates.get(0);
     }
 
-
-    public Diary findNoGameDayDiaryData(LocalDate date, Long userId) {
+    public Diary findDiaryDataNotDoubleHeader(LocalDate date, Long userId) {
         return diaryRepository.findByGameDate(date).stream()
                 .filter(diary -> diary.getUser().getId().equals(userId))
-                .filter(diary -> diary.getStartGame() == null)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Diary findDiaryDataDoubleHeader(LocalDate date, Long userId,Time startGame) {
+        return diaryRepository.findByGameDate(date).stream()
+                .filter(diary -> diary.getUser().getId().equals(userId))
+                .filter(diary -> diary.getStartGame().equals(startGame))
                 .findFirst()
                 .orElse(null);
     }

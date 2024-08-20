@@ -45,12 +45,12 @@
                     <input type="hidden" name="id" th:value="0" th:if="${diaryContent == null}" />
                     <div class="mb-3" id="data_one">
                         <div class="item"><input type="date" id="date" value="" name="gameDate"></div>
-                        <div class="item" th:if="${todayGame}" th:text="${gameData.startGame}"><p></p></div>
-                        <input type="hidden" name="startGame" th:value="${gameData.startGame}" th:if="${todayGame}" />
+                        <div class="item" th:if="${todayGame}" th:text="${gameDataTeam1.startGame}"></div>
+                        <input type="hidden" name="startGame" th:value="${gameDataTeam1.startGame}" th:if="${todayGame}" />
                         <input type="hidden" name="startGame" value=""/>
-                        <div class="item" th:if="${todayGame}" th:text="${gameData.teamName} VS ${gameData.matchTeam}"><p></p></div>
-                        <div class="item" th:if="${todayGame}" th:text="${gameData.stadium}"><p></p></div>
-                        <div class="item" th:if="${todayGame} and ${doubleHeader}"><p>비고</p></div>
+                        <div class="item" th:if="${todayGame}" th:text="${gameDataTeam1.teamName} + ' VS ' + ${gameDataTeam1.matchTeam}"></div>
+                        <div class="item" th:if="${todayGame}" th:text="${gameDataTeam1.stadium}"></div>
+                        <div class="item" th:if="${todayGame} and ${doubleHeader}"></div>
                         <div class="item" th:if="${todayGame} and ${doubleHeader}">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -89,7 +89,7 @@
                                 </table>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="MVP를 입력해주세요." required id="mvp" name="mvp">
+                                <input type="text" class="form-control" placeholder="MVP를 입력해주세요." required id="mvp" name="mvp" th:value="${diaryContent != null ? diaryContent.mvp : ''}">
                             </div>
                         </div>
                         <input type="hidden" name="mvp" value="" th:if="${!todayGame}"/>
