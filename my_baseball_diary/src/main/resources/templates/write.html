@@ -41,6 +41,8 @@
             <div class = "mb-2 text-center">
                 <form th:action="${diaryContent != null ? '/update' : '/write'}" method="POST" id="writeForm">
                     <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+                    <input type="hidden" name="id" th:value="${diaryContent.id}" th:if="${diaryContent != null}" />
+                    <input type="hidden" name="id" th:value="0" th:if="${diaryContent == null}" />
                     <div class="mb-3" id="data_one">
                         <div class="item"><input type="date" id="date" value="" name="gameDate"></div>
                         <div class="item" th:if="${todayGame}" th:text="${gameData.startGame}"><p></p></div>

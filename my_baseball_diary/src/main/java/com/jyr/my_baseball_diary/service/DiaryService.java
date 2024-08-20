@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -34,25 +35,37 @@ public class DiaryService {
 
     @Transactional
     public void save(DiaryDTO dto) {
-        Time time;
+        Time time = null;
 
         if (!dto.getStartGame().isEmpty()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             LocalTime localTime = LocalTime.parse(dto.getStartGame(), formatter);
             time = Time.valueOf(localTime);
-        } else {
-            time = null;
         }
 
         diaryRepository.save(Diary.builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .mvp(dto.getMvp())
-                .date(LocalDate.now())
+                .date(LocalDateTime.now())
                 .startGame(time)
                 .gameDate(dto.getGameDate())
                 .user(getCurrentUser().orElse(null))
                 .build());
+    }
+
+    @Transactional
+    public void update(DiaryDTO dto) {
+        Time time = null;
+
+        if (!dto.getStartGame().isEmpty()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime localTime = LocalTime.parse(dto.getStartGame(), formatter);
+            time = Time.valueOf(localTime);
+        }
+
+        diaryRepository.updateDiary(dto.getId(),dto.getTitle(),dto.getContent(),
+                dto.getMvp(), LocalDateTime.now(),time,dto.getGameDate());
     }
 
     public Optional<User> getCurrentUser() {

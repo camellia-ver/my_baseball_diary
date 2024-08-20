@@ -77,6 +77,12 @@ public class DiaryController {
         return "redirect:/main";
     }
 
+    @PostMapping("/update")
+    public String update(DiaryDTO request) {
+        diaryService.update(request);
+        return "redirect:/main";
+    }
+
     @GetMapping("/admin/test")
     public String admin() {
         return "test";

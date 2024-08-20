@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Table(name = "diary")
 @Getter
@@ -26,7 +27,7 @@ public class Diary {
     private String mvp;
 
     @Column(name = "date", nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(name = "start_game")
     private Time startGame;
@@ -41,7 +42,7 @@ public class Diary {
     private Diary() {}
 
     @Builder
-    public Diary(String title, String content, String mvp, LocalDate date,
+    public Diary(String title, String content, String mvp, LocalDateTime date,
                  Time startGame, LocalDate gameDate, User user) {
         this.title = title;
         this.content = content;

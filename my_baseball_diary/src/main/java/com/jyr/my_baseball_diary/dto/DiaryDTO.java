@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class DiaryDTO {
+    Long id;
     String title;
     String content;
     String mvp;
