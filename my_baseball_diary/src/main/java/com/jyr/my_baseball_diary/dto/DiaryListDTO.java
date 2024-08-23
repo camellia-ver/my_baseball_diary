@@ -5,14 +5,14 @@ import lombok.Setter;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class DiaryDTO {
+public class DiaryListDTO {
     private Long id;
     private String title;
-    private String content;
-    private String mvp;
     private LocalDate gameDate;
-    private String startGame;
+    private Time startGame;
+    private String formattedDate;
 }

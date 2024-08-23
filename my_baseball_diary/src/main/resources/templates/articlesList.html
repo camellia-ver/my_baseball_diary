@@ -43,20 +43,20 @@
                     <thead>
                     <tr>
                         <th scope="col" class="no_width">No.</th>
-                        <th scope="col">날짜</th>
-                        <th scope="col">경기</th>
+                        <th scope="col">경기일</th>
                         <th scope="col">경기시간</th>
                         <th scope="col">제목</th>
+                        <th scope="col">작성일자</th>
                         <th scope="col" class="btn-width"></th>
                     </tr>
                     </thead>
                     <tbody id="">
-                        <tr>
-                            <th>1</th>
-                            <th>20240729</th>
-                            <th>삼성 VS ...</th>
-                            <th>18:30</th>
-                            <th>오늘의 경기...</th>
+                        <tr th:each="item : ${diaryList}">
+                            <th th:text="${item.id}"></th>
+                            <th th:text="${item.gameDate}"></th>
+                            <th th:text="${item.startGame}"></th>
+                            <th th:text="${item.title}"></th>
+                            <th th:text="${item.formattedDate}"></th>
                             <th>
                                 <button class="btn btn-light" type="button">수정</button>
                                 <button class="btn btn-light" type="button">삭제</button>

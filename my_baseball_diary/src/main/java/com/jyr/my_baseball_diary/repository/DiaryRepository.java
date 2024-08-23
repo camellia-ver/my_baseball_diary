@@ -18,6 +18,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     @Query("SELECT d FROM Diary d WHERE d.gameDate = :date")
     List<Diary> findByGameDate(@Param("date") LocalDate date);
 
+    Optional<Diary> findByUserId(Long id);
+
     @Modifying
     @Query("UPDATE Diary d SET d.title = :title, d.content = :content, d.mvp = :mvp, d.date = :date, d.startGame = :startGame, d.gameDate = :gameDate WHERE d.id = :id")
     int updateDiary(Long id, String title, String content, String mvp, LocalDateTime date, Time startGame, LocalDate gameDate);

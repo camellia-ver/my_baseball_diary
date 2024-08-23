@@ -14,7 +14,4 @@ import java.util.Optional;
 public interface GameDataRepository extends JpaRepository<GameData, Long> {
     @Query("SELECT g FROM GameData g WHERE g.date = :date")
     List<GameData> findByDate(@Param("date") LocalDate date);
-
-    @Query("SELECT g.date FROM GameData g ORDER BY g.date DESC")
-    List<LocalDate> findTopDates();
 }

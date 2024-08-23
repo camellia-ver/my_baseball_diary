@@ -44,7 +44,7 @@
                     <input type="hidden" name="id" th:value="${diaryContent.id}" th:if="${diaryContent != null}" />
                     <input type="hidden" name="id" th:value="0" th:if="${diaryContent == null}" />
                     <div class="mb-3" id="data_one">
-                        <div class="item"><input type="date" id="date" value="" name="gameDate"></div>
+                        <div class="item"><input type="date" id="date" th:value="${date}" name="gameDate"></div>
                         <div class="item" th:if="${todayGame}" th:text="${gameDataTeam1.startGame}"></div>
                         <input type="hidden" name="startGame" th:value="${gameDataTeam1.startGame}" th:if="${todayGame}" />
                         <input type="hidden" name="startGame" value=""/>
