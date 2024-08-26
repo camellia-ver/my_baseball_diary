@@ -5,7 +5,6 @@ import com.jyr.my_baseball_diary.domain.GameData;
 import com.jyr.my_baseball_diary.domain.LineUp;
 import com.jyr.my_baseball_diary.domain.User;
 import com.jyr.my_baseball_diary.dto.DiaryDTO;
-import com.jyr.my_baseball_diary.dto.DiaryListDTO;
 import com.jyr.my_baseball_diary.repository.DiaryRepository;
 import com.jyr.my_baseball_diary.repository.GameDataRepository;
 import com.jyr.my_baseball_diary.repository.LineUpRepository;
@@ -158,30 +157,17 @@ public class DiaryService {
                 .orElse(null);
     }
 
-    public Diary findDiaryDataDoubleHeader(LocalDate date, Long userId,Time startGame) {
-        return diaryRepository.findByGameDate(date).stream()
-                .filter(diary -> diary.getUser().getId().equals(userId))
-                .filter(diary -> diary.getStartGame().equals(startGame))
-                .findFirst()
-                .orElse(null);
+    public List<Diary> findByUserId() {
+        Long userId = getCurrentUser().orElseThrow().getId();
+        return diaryRepository.findByUserId(userId).stream().toList();
     }
 
-    public List<DiaryListDTO> findById() {
-        Long id = getCurrentUser().orElseThrow().getId();
-        List<Diary> diaryList = diaryRepository.findByUserId(id).stream().toList();
-        List<DiaryListDTO> result = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public Diary findById(Long id) {
+        return diaryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+    }
 
-        for (Diary d : diaryList) {
-            DiaryListDTO temp = new DiaryListDTO();
-            temp.setId(d.getId());
-            temp.setTitle(d.getTitle());
-            temp.setGameDate(d.getGameDate());
-            temp.setStartGame(d.getStartGame());
-            temp.setFormattedDate(d.getDate().format(formatter));
-            result.add(temp);
-        }
-
-        return result;
+    public void delete(Long id) {
+        diaryRepository.deleteById(id);
     }
 }

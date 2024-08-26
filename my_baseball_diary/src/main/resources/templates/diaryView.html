@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/reset.css">
     <link rel="stylesheet" type="text/css" href="/css/write.css">
-    <script src="/js/write.js"></script>
+    <script src="/js/diaryView.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light navbar-custom" style="background-color: #F4BFBF;">
@@ -46,8 +46,6 @@
                     <div class="mb-3" id="data_one">
                         <div class="item"><input type="date" id="date" th:value="${date}" name="gameDate"></div>
                         <div class="item" th:if="${todayGame}" th:text="${startGame}"></div>
-                        <input type="hidden" name="startGame" th:value="${startGame}" th:if="${todayGame}" />
-                        <input type="hidden" name="startGame" value=""/>
                         <div class="item" th:if="${todayGame}" th:text="${gameDataTeam1.teamName} + ' VS ' + ${gameDataTeam1.matchTeam}"></div>
                         <div class="item" th:if="${todayGame}" th:text="${gameDataTeam1.stadium}"></div>
                         <div class="item" th:if="${todayGame} and ${doubleHeader}"></div>
@@ -64,7 +62,7 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="제목을 입력해주세요." required id="title" name="title" th:value="${diaryContent != null ? diaryContent.title : ''}">
+                        제목표시
                     </div>
                     <div class="mb-3" id="content-area">
                         <div class="mb-3" id="left-area" th:if="${todayGame}">
@@ -72,27 +70,26 @@
                                 <p id="line-up-title">Line Up</p>
                                 <table class="table table-striped">
                                     <tbody>
-                                        <tr th:each="item : ${hList}">
-                                            <td th:text="${item.no}"></td>
-                                            <td th:text="${item.position}"></td>
-                                            <td th:text="${item.playerName}"></td>
-                                        </tr>
+                                    <tr th:each="item : ${hList}">
+                                        <td th:text="${item.no}"></td>
+                                        <td th:text="${item.position}"></td>
+                                        <td th:text="${item.playerName}"></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <table class="table table-striped">
                                     <tbody>
-                                        <tr th:each="item : ${pList}">
-                                            <td th:text="${item.position}"></td>
-                                            <td th:text="${item.playerName}"></td>
-                                        </tr>
+                                    <tr th:each="item : ${pList}">
+                                        <td th:text="${item.position}"></td>
+                                        <td th:text="${item.playerName}"></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="MVP를 입력해주세요." required id="mvp" name="mvp" th:value="${diaryContent != null ? diaryContent.mvp : ''}">
+                                mvp 표시
                             </div>
                         </div>
-                        <input type="hidden" name="mvp" value="" th:if="${!todayGame}"/>
                         <div class="mb-3" id="right-area">
                             <div class="mb-3" th:if="${todayGame}">
                                 <table class="table table-striped">
@@ -163,12 +160,13 @@
                                 </table>
                             </div>
                             <div class="mb-3">
-                                <textarea class="form-control" placeholder="내용을 입력해주세요." id="markdown-editor" name="content" style="visibility: hidden;" th:text="${diaryContent != null ? diaryContent.content : ''}"></textarea>
+                                내용표시
                             </div>
                         </div>
                     </div>
                     <div class="btnBox">
-                        <button type="submit" class="btn btn-light" id="saveBtn">저장</button>
+                        <button type="submit" class="btn btn-light" id="updateBtn">수정</button>
+                        <button type="submit" class="btn btn-light" id="deleteBtn">삭제</button>
                     </div>
                 </form>
             </div>

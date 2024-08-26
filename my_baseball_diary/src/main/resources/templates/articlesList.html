@@ -44,23 +44,20 @@
                     <tr>
                         <th scope="col" class="no_width">No.</th>
                         <th scope="col">경기일</th>
-                        <th scope="col">경기시간</th>
                         <th scope="col">제목</th>
-                        <th scope="col">작성일자</th>
                         <th scope="col" class="btn-width"></th>
                     </tr>
                     </thead>
-                    <tbody id="">
-                        <tr th:each="item : ${diaryList}">
-                            <th th:text="${item.id}"></th>
-                            <th th:text="${item.gameDate}"></th>
-                            <th th:text="${item.startGame}"></th>
-                            <th th:text="${item.title}"></th>
-                            <th th:text="${item.formattedDate}"></th>
-                            <th>
-                                <button class="btn btn-light" type="button">수정</button>
-                                <button class="btn btn-light" type="button">삭제</button>
-                            </th>
+                    <tbody>
+                        <tr th:each="item : ${diaryList}"
+                            th:onclick="|window.location.href='@{/diaries/{id}(id=${item.id})}'|">
+                            <td th:text="${item.id}"></td>
+                            <td th:text="${item.gameDate}"></td>
+                            <td th:text="${item.title}"></td>
+                            <td>
+                                <button class="btn btn-light" type="button" th:onclick="|window.location.href='@{/diaries/{id}(id=${item.id})}'|">수정</button>
+                                <button class="btn btn-light" type="button" th:onclick="|if(confirm('정말 삭제하시겠습니까?')) { window.location.href='@{/diaries/delete/{id}(id=${item.id})}'; }|">삭제</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
