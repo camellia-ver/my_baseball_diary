@@ -35,7 +35,7 @@ public class DiaryService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void save(DiaryDTO dto) {
+    public Long save(DiaryDTO dto) {
         Time startGameTime = parseStartGameTime(dto.getStartGame().replace(",",""));
 
         Diary diary = Diary.builder()
@@ -48,7 +48,7 @@ public class DiaryService {
                 .user(getCurrentUser().orElse(null))
                 .build();
 
-        diaryRepository.save(diary);
+        return diaryRepository.save(diary).getId();
     }
 
     @Transactional

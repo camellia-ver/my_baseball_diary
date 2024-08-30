@@ -87,8 +87,8 @@ public class DiaryController {
 
     @PostMapping("/write")
     public String write(DiaryDTO request) {
-        diaryService.save(request);
-        return "redirect:/main";
+        Long id = diaryService.save(request);
+        return "redirect:/diaries/" + id;
     }
 
     @PostMapping("/update")
