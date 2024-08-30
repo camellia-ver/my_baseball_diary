@@ -82,10 +82,9 @@ public class DiaryService {
         return Optional.empty();
     }
 
-    public Boolean isGame(LocalDate date,String teamName) {
+    public Boolean isGame(LocalDate date, String teamName) {
         return gameDataRepository.findByDate(date).stream()
-                .filter(gameData -> gameData.getTeamName().equals(teamName))
-                .count() == 1;
+                .anyMatch(gameData -> gameData.getTeamName().equals(teamName));
     }
 
     public Boolean isDoubleHeader(LocalDate date, String teamName) {
@@ -97,11 +96,14 @@ public class DiaryService {
     public Map<String, List<LineUp>> findLineUp(LocalDate date, String teamName) {
         return divideLineUp(lineUpRepository.findByDate(date).stream()
                 .filter(lineUp -> lineUp.getTeamName().equals(teamName))
-                .collect(Collectors.groupingBy(LineUp::getStartGame))
-                .entrySet().stream()
-                .min(Map.Entry.comparingByKey())
-                .map(Map.Entry::getValue)
-                .orElse(Collections.emptyList()));
+                .collect(Collectors.toList()));
+    }
+
+    public Map<String, List<LineUp>> findLineUpByGameStart(LocalDate date, String teamName, Time gameStart) {
+        return divideLineUp(lineUpRepository.findByDate(date).stream()
+                .filter(lineUp -> lineUp.getTeamName().equals(teamName))
+                .filter(lineUp -> lineUp.getStartGame().equals(gameStart))
+                .collect(Collectors.toList()));
     }
 
     private Map<String, List<LineUp>> divideLineUp(List<LineUp> lineUpList) {
@@ -123,23 +125,24 @@ public class DiaryService {
         return result;
     }
 
+    private GameData findTeamData(List<GameData> gameDataList, String teamName, Time startGame) {
+        return gameDataList.stream()
+                .filter(gameData -> gameData.getTeamName().equals(teamName))
+                .filter(gameData -> startGame == null || gameData.getStartGame().equals(startGame))
+                .findFirst()
+                .orElse(null);
+    }
+
     public Map<String, GameData> findGameData(LocalDate date, String teamName) {
         List<GameData> gameDataList = gameDataRepository.findByDate(date);
-        GameData teamData = gameDataList.stream()
-                .filter(gameData -> gameData.getTeamName().equals(teamName))
-                .min(Comparator.comparing(GameData::getStartGame))
-                .orElse(null);
+        GameData teamData = findTeamData(gameDataList, teamName, null);
 
         Map<String, GameData> result = new LinkedHashMap<>();
-
         if (teamData != null) {
             result.put("team1", teamData);
 
             String matchTeam = teamData.getMatchTeam();
-            GameData opponentData = gameDataList.stream()
-                    .filter(gameData -> gameData.getTeamName().equals(matchTeam))
-                    .min(Comparator.comparing(GameData::getStartGame))
-                    .orElse(null);
+            GameData opponentData = findTeamData(gameDataList, matchTeam, null);
 
             result.put("team2", opponentData);
         } else {
@@ -150,7 +153,27 @@ public class DiaryService {
         return result;
     }
 
-    public Diary findDiaryDataNotDoubleHeader(LocalDate date, Long userId) {
+    public Map<String, GameData> findGameDataByStartGame(LocalDate date, String teamName, Time startGame) {
+        List<GameData> gameDataList = gameDataRepository.findByDate(date);
+        GameData teamData = findTeamData(gameDataList, teamName, startGame);
+
+        Map<String, GameData> result = new LinkedHashMap<>();
+        if (teamData != null) {
+            result.put("team1", teamData);
+
+            String matchTeam = teamData.getMatchTeam();
+            GameData opponentData = findTeamData(gameDataList, matchTeam, null);
+
+            result.put("team2", opponentData);
+        } else {
+            result.put("team1", null);
+            result.put("team2", null);
+        }
+
+        return result;
+    }
+
+    public Diary findDiaryData(LocalDate date, Long userId) {
         return diaryRepository.findByGameDate(date).stream()
                 .filter(diary -> diary.getUser().getId().equals(userId))
                 .findFirst()
@@ -167,6 +190,7 @@ public class DiaryService {
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
     }
 
+    @Transactional
     public void delete(Long id) {
         diaryRepository.deleteById(id);
     }

@@ -1,0 +1,50 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: left;
+    color:white;
+    background: #FFD9C0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    padding:5px
+}
+
+.content {padding-left:20px;overflow: auto;}
+
+.padding-large {
+    padding-top: 300px;
+}
+
+.padding-small {
+    padding-top: 100px;
+}
+
+section{width:100%}
+section.content {
+    padding-bottom:20px;
+}
+
+.card{border:none; background:#F4BFBF}
+
+#contents{ padding-top:20px;}
+#diary-title{font-size:25px;}
+#mvp{font-size:20px;}
+#diary-content{font-size:18px;}
+#data_one{display:flex;}
+.item{margin-right: 10px;font-size: 20px;}
+#content-area{display: flex;}
+#left-area{flex: 1;display: flex;flex-direction: column;padding-right:5px;}
+#right-area{flex: 3;display: flex;flex-direction: column;}
+#line-up-title{font-size:20px;padding-bottom:10px;}
+
+.btnBox{text-align:right;}
+#saveBtn{margin:10px; width:80px;}

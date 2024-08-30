@@ -45,7 +45,6 @@
                         <th scope="col" class="no_width">No.</th>
                         <th scope="col">경기일</th>
                         <th scope="col">제목</th>
-                        <th scope="col" class="btn-width"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -54,10 +53,6 @@
                             <td th:text="${item.id}"></td>
                             <td th:text="${item.gameDate}"></td>
                             <td th:text="${item.title}"></td>
-                            <td>
-                                <button class="btn btn-light" type="button" th:onclick="|window.location.href='@{/diaries/{id}(id=${item.id})}'|">수정</button>
-                                <button class="btn btn-light" type="button" th:onclick="|if(confirm('정말 삭제하시겠습니까?')) { window.location.href='@{/diaries/delete/{id}(id=${item.id})}'; }|">삭제</button>
-                            </td>
                         </tr>
                     </tbody>
                 </table>

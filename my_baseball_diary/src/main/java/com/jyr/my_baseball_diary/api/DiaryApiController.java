@@ -21,8 +21,8 @@ public class DiaryApiController {
     }
 
     @DeleteMapping("/api/diaries/{id}")
-    public ResponseEntity<Void> deleteDiary(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDiary(@PathVariable("id") Long id) {
         diaryService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
