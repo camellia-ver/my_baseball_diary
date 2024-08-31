@@ -85,6 +85,19 @@ public class DiaryController {
         return "diaryView";
     }
 
+    @GetMapping("/myPage")
+    public String myPage(Model model,@AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        User user = userService.findByUser(email);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        model.addAttribute("date",formatter.format(user.getCreateDate()));
+        model.addAttribute("user", user);
+
+        return "myPage";
+    }
+
     @PostMapping("/write")
     public String write(DiaryDTO request) {
         Long id = diaryService.save(request);
@@ -97,23 +110,19 @@ public class DiaryController {
         return "redirect:/main";
     }
 
-    @GetMapping("/admin/test")
-    public String admin() {
-        return "test";
-    }
-
     private void populateGameData(Model model, LocalDate date, String favoriteTeam, Diary diary) {
         boolean isDoubleHeader = diaryService.isDoubleHeader(date, favoriteTeam);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
-        Map<String, List<LineUp>> lineUp = isDoubleHeader
+        Map<String, List<LineUp>> lineUp = isDoubleHeader && diary != null
                 ? diaryService.findLineUpByGameStart(date, favoriteTeam, diary.getStartGame())
                 : diaryService.findLineUp(date, favoriteTeam);
 
-        Map<String, GameData> gameData = isDoubleHeader
+        Map<String, GameData> gameData = isDoubleHeader && diary != null
                 ? diaryService.findGameDataByStartGame(date, favoriteTeam, diary.getStartGame())
                 : diaryService.findGameData(date, favoriteTeam);
 
+        model.addAttribute("doubleHeader", isDoubleHeader);
         model.addAttribute("pList", lineUp.get("pitcher"));
         model.addAttribute("hList", lineUp.get("hitter"));
         model.addAttribute("gameDataTeam1", gameData.get("team1"));

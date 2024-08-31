@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (deleteBtn) {
         deleteBtn.addEventListener('click', () => {
+            var result = confirm("글을 삭제 하시겠습니까?");
+            if (!result)
+            {
+                return
+            }
+
             const id = diaryIdInput.value;
             if (!id) {
                 alert('유효한 ID를 입력해 주세요.');

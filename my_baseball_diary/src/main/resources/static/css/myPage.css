@@ -1,0 +1,33 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: left;
+    color:white;
+    background: #FFD9C0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    padding:5px
+}
+
+.content {padding-top: 50px;padding-left:20px;}
+
+section{width:100%}
+
+.card{border:none; background:#F4BFBF}
+
+#user-data{padding-top:10px; font-size:28px; display: flex;
+flex-direction: column; align-items: flex-start;}
+#user-name{padding-bottom:10px;}
+#user-email{padding-bottom:10px;}
+#user-favorite-team{padding-bottom:10px;}
+#update-btn{margin-left:10px;}
+#user-create-date{padding-bottom:10px;}
