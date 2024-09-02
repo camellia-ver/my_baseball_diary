@@ -24,10 +24,15 @@ section{width:100%}
 
 .card{border:none; background:#F4BFBF}
 
-#user-data{padding-top:10px; font-size:28px; display: flex;
-flex-direction: column; align-items: flex-start;}
+label{margin-bottom:5px;}
+
+#user-data{padding-top:10px; font-size:25px; }
 #user-name{padding-bottom:10px;}
 #user-email{padding-bottom:10px;}
 #user-favorite-team{padding-bottom:10px;}
 #update-btn{margin-left:10px;}
 #user-create-date{padding-bottom:10px;}
+
+label,#user-create-date{display: flex;flex-direction: column; align-items: flex-start;}
+
+#userUpdateForm{text-align:right;}
