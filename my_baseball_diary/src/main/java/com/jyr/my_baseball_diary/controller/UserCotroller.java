@@ -49,6 +49,7 @@ public class UserCotroller {
 
     @PostMapping("/userUpdate")
     public String userUpdate(UserDTO request) {
+        userService.update(request);
         return "redirect:/myPage";
     }
 
