@@ -1,17 +1,22 @@
 package com.jyr.my_baseball_diary.controller;
 
+import com.jyr.my_baseball_diary.domain.User;
 import com.jyr.my_baseball_diary.service.BaseballDataService;
 import com.jyr.my_baseball_diary.service.UserService;
 import com.jyr.my_baseball_diary.dto.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,6 +45,24 @@ public class UserCotroller {
         }
 
         return "redirect:/login";
+    }
+
+    @PostMapping("/userUpdate")
+    public String userUpdate(UserDTO request) {
+        return "redirect:/myPage";
+    }
+
+    @GetMapping("/myPage")
+    public String myPage(Model model,@AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        User user = userService.findByUser(email);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        model.addAttribute("date",formatter.format(user.getCreateDate()));
+        model.addAttribute("user", user);
+
+        return "myPage";
     }
 
     @GetMapping("/logout")

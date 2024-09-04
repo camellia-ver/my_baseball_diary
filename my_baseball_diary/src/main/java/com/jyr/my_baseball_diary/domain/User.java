@@ -25,8 +25,8 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "user_name", nullable = false)
-    private String userName;
+    @Column(name = "display_name", nullable = false)
+    private String displayName;
 
     @Column(name = "favorite_team")
     private String favoriteTeam;
@@ -44,11 +44,11 @@ public class User implements UserDetails {
     private User() {}
 
     @Builder
-    public User(String email, String password, String userName,
+    public User(String email, String password, String displayName,
                 String favoriteTeam, LocalDateTime createDate, String role) {
         this.email = email;
         this.password = password;
-        this.userName = userName;
+        this.displayName = displayName;
         this.favoriteTeam = favoriteTeam;
         this.createDate = createDate;
         this.role = role;
@@ -62,13 +62,11 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return email;
     }
 
     @Override
     public String getPassword() {
         return password;
     }
-
-
 }

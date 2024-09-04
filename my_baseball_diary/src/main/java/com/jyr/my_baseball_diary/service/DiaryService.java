@@ -73,11 +73,11 @@ public class DiaryService {
         }
     }
 
-    public Optional<User> getCurrentUser() {
+    private Optional<User> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            String username = ((UserDetails) authentication.getPrincipal()).getUsername();
-            return userRepository.findByEmail(username);
+            String email = ((UserDetails) authentication.getPrincipal()).getUsername();
+            return userRepository.findByEmail(email);
         }
         return Optional.empty();
     }

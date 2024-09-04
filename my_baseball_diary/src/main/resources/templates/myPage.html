@@ -15,11 +15,12 @@
                     <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
                     <div class="mb-3">
                         <label class="form-label">사용자명</label>
-                        <input type="text" class="form-control" name="userName" th:value="${user.username}">
+                        <input type="text" class="form-control" name="userName" th:value="${user.displayName}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
                         <input type="email" class="form-control" name="email" th:value="${user.email}" id="inputEmail">
+                        <div th:if="${errorMessage}" class="error"><p th:text="${errorMessage}"></p></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">응원팀</label>

@@ -85,19 +85,6 @@ public class DiaryController {
         return "diaryView";
     }
 
-    @GetMapping("/myPage")
-    public String myPage(Model model,@AuthenticationPrincipal UserDetails userDetails) {
-        String email = userDetails.getUsername();
-        User user = userService.findByUser(email);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        model.addAttribute("date",formatter.format(user.getCreateDate()));
-        model.addAttribute("user", user);
-
-        return "myPage";
-    }
-
     @PostMapping("/write")
     public String write(DiaryDTO request) {
         Long id = diaryService.save(request);

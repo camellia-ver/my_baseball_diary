@@ -4,12 +4,16 @@ import com.jyr.my_baseball_diary.domain.User;
 import com.jyr.my_baseball_diary.repository.UserRepository;
 import com.jyr.my_baseball_diary.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,22 +23,37 @@ public class UserService{
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public Long join(UserDTO dto) {
+    public void join(UserDTO dto) {
         validateDuplicateUser(dto.getEmail());
-        return userRepository.save(User.builder()
+        userRepository.save(User.builder()
                 .email(dto.getEmail())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
-                .userName(dto.getUserName())
+                .displayName(dto.getDisplayName())
                 .favoriteTeam(dto.getFavoriteTeam())
                 .createDate(LocalDateTime.now())
                 .role("USER")
-                .build()).getId();
+                .build());
     }
 
-    public void validateDuplicateUser(String email) {
+    @Transactional
+    public void update(UserDTO dto) {
+        validateDuplicateUser(dto.getEmail());
+        getCurrentUser().ifPresent(user -> userRepository.updateUser(user.getId(), dto.getEmail(), dto.getDisplayName(), dto.getFavoriteTeam()));
+    }
+
+    private Optional<User> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            String email = ((UserDetails) authentication.getPrincipal()).getUsername();
+            return userRepository.findByEmail(email);
+        }
+        return Optional.empty();
+    }
+
+    private void validateDuplicateUser(String email) {
         List<User> findUsers = userRepository.findByEmail(email).stream().toList();
         if (!findUsers.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
+            throw new IllegalStateException("이미 존재하는 이메일 주소입니다.");
         }
     }
 
