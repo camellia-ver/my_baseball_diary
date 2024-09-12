@@ -26,8 +26,10 @@
                                 경기선택
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#">첫번째 경기</a></li>
-                                <li><a class="dropdown-item" href="#">두번째 경기</a></li>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" id="firstLink" th:href="@{/writeForm(selectedTime='first', inputDate=${date})}">첫번째 경기</a></li>
+                                    <li><a class="dropdown-item" id="secondLink" th:href="@{/writeForm(selectedTime='second', inputDate=${date})}">두번째 경기</a></li>
+                                </ul>
                             </ul>
                         </div>
                     </div>

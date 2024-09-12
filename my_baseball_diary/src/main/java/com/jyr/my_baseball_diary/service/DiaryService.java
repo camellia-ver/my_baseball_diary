@@ -9,7 +9,11 @@ import com.jyr.my_baseball_diary.repository.DiaryRepository;
 import com.jyr.my_baseball_diary.repository.GameDataRepository;
 import com.jyr.my_baseball_diary.repository.LineUpRepository;
 import com.jyr.my_baseball_diary.repository.UserRepository;
+import com.jyr.my_baseball_diary.utill.CommonUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +36,7 @@ public class DiaryService {
     private final DiaryRepository diaryRepository;
     private final GameDataRepository gameDataRepository;
     private final LineUpRepository lineUpRepository;
-    private final UserRepository userRepository;
+    private final CommonUtils commonUtils;
 
     @Transactional
     public Long save(DiaryDTO dto) {
@@ -45,7 +49,7 @@ public class DiaryService {
                 .date(LocalDateTime.now())
                 .startGame(startGameTime)
                 .gameDate(dto.getGameDate())
-                .user(getCurrentUser().orElse(null))
+                .user(commonUtils.getCurrentUser().orElse(null))
                 .build();
 
         return diaryRepository.save(diary).getId();
@@ -65,21 +69,12 @@ public class DiaryService {
         }
 
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             LocalTime localTime = LocalTime.parse(startGame, formatter);
             return Time.valueOf(localTime);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("잘못된 시간 형식: " + startGame, e);
         }
-    }
-
-    private Optional<User> getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            String email = ((UserDetails) authentication.getPrincipal()).getUsername();
-            return userRepository.findByEmail(email);
-        }
-        return Optional.empty();
     }
 
     public Boolean isGame(LocalDate date, String teamName) {
@@ -93,6 +88,37 @@ public class DiaryService {
                 .count() > 1;
     }
 
+    public Time findStartGame(LocalDate date, String teamName, String selectGame) {
+        List<Time> result = new ArrayList<>();
+
+        List<GameData> gameDataList = gameDataRepository.findByDate(date).stream()
+                .filter(gameData -> gameData.getTeamName().equals(teamName))
+                .toList();
+
+        for (GameData gameData : gameDataList) {
+            result.add(gameData.getStartGame());
+        }
+
+        if (result.isEmpty()) {
+            throw new IllegalStateException("No games found for the given date and team.");
+        }
+
+        if (result.size() == 1) {
+            return result.get(0);
+        }
+
+        Time time1 = result.get(0);
+        Time time2 = result.get(1);
+
+        if ("first".equals(selectGame)) {
+            return time1.compareTo(time2) < 0 ? time1 : time2;
+        } else if ("second".equals(selectGame)) {
+            return time1.compareTo(time2) > 0 ? time1 : time2;
+        } else {
+            throw new IllegalArgumentException("Invalid value for selectGame: " + selectGame);
+        }
+    }
+
     public Map<String, List<LineUp>> findLineUp(LocalDate date, String teamName) {
         return divideLineUp(lineUpRepository.findByDate(date).stream()
                 .filter(lineUp -> lineUp.getTeamName().equals(teamName))
@@ -100,6 +126,8 @@ public class DiaryService {
     }
 
     public Map<String, List<LineUp>> findLineUpByGameStart(LocalDate date, String teamName, Time gameStart) {
+        System.out.println(gameStart);
+
         return divideLineUp(lineUpRepository.findByDate(date).stream()
                 .filter(lineUp -> lineUp.getTeamName().equals(teamName))
                 .filter(lineUp -> lineUp.getStartGame().equals(gameStart))
@@ -180,9 +208,10 @@ public class DiaryService {
                 .orElse(null);
     }
 
-    public List<Diary> findByUserId() {
-        Long userId = getCurrentUser().orElseThrow().getId();
-        return diaryRepository.findByUserId(userId).stream().toList();
+    public Page<Diary> findByUserId(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Long userId = commonUtils.getCurrentUser().orElseThrow().getId();
+        return diaryRepository.findByUserId(userId, pageable);
     }
 
     public Diary findById(Long id) {

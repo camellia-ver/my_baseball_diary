@@ -1,6 +1,8 @@
 package com.jyr.my_baseball_diary.repository;
 
 import com.jyr.my_baseball_diary.domain.Diary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,7 +20,9 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     @Query("SELECT d FROM Diary d WHERE d.gameDate = :date")
     List<Diary> findByGameDate(@Param("date") LocalDate date);
 
-    Optional<Diary> findByUserId(Long id);
+    //Optional<Diary> findByUserId(Long id);
+
+    Page<Diary> findByUserId(Long userId, Pageable pageable);
 
     @Modifying
     @Query("UPDATE Diary d SET d.title = :title, d.content = :content, d.mvp = :mvp, d.date = :date, d.startGame = :startGame, d.gameDate = :gameDate WHERE d.id = :id")

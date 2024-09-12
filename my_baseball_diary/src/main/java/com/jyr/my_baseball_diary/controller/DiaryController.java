@@ -32,20 +32,27 @@ public class DiaryController {
     private final UserService userService;
 
     @GetMapping("/main")
-    public String mainPage(Model model) {
+    public String mainPage(
+            Model model,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
         if (SecurityContextHolder.getContext().getAuthentication().getAuthorities()
                 .stream().anyMatch(grantedAuthority -> grantedAuthority.
                         getAuthority().equals("ROLE_ADMIN"))) {
             return "admin";
         } else {
-            model.addAttribute("diaryList", diaryService.findByUserId());
-
+            model.addAttribute("diaryList", diaryService.findByUserId(page,size));
             return "articlesList";
         }
     }
 
     @GetMapping("/writeForm")
-    public String writePage(Model model, @AuthenticationPrincipal UserDetails userDetails, @RequestParam(name = "inputDate", required = false) String inputDate) {
+    public String writePage(
+            Model model,
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestParam(name = "inputDate", required = false) String inputDate,
+            @RequestParam(name = "selectedTime", required = false) String selectedTime
+    ) {
         String email = userDetails.getUsername();
         User user = userService.findByUser(email);
         String favoriteTeam = user.getFavoriteTeam();
@@ -57,7 +64,7 @@ public class DiaryController {
         Diary diary = diaryService.findDiaryData(date, userId);
 
         if (isTodayDataAvailable) {
-            populateGameData(model, date, favoriteTeam, diary);
+            populateGameData(model, date, favoriteTeam, diary, selectedTime);
         }
 
         model.addAttribute("todayGame", isTodayDataAvailable);
@@ -68,18 +75,22 @@ public class DiaryController {
     }
 
     @GetMapping("/diaries/{id}")
-    public String getDiary(@PathVariable("id") Long id, Model model) {
+    public String getDiary(
+            Model model,
+            @PathVariable("id") Long id,
+            @RequestParam(name = "selectedTime", required = false) String selectedTime
+    ) {
         Diary diary = diaryService.findById(id);
         Time startGame = diary.getStartGame();
         LocalDate gameDate = diary.getGameDate();
 
         if (startGame != null) {
             String favoriteTeam = diary.getUser().getFavoriteTeam();
-            populateGameData(model, gameDate, favoriteTeam, diary);
+            populateGameData(model, gameDate, favoriteTeam, diary, selectedTime);
         }
 
         model.addAttribute("todayGame", startGame != null);
-        model.addAttribute("diaryContent",diary);
+        model.addAttribute("diaryContent", diary);
         model.addAttribute("date", gameDate);
 
         return "diaryView";
@@ -97,16 +108,21 @@ public class DiaryController {
         return "redirect:/main";
     }
 
-    private void populateGameData(Model model, LocalDate date, String favoriteTeam, Diary diary) {
+    private void populateGameData(Model model, LocalDate date, String favoriteTeam, Diary diary, String selectedTime) {
         boolean isDoubleHeader = diaryService.isDoubleHeader(date, favoriteTeam);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        Time time = diary != null ? diary.getStartGame() : null;
 
-        Map<String, List<LineUp>> lineUp = isDoubleHeader && diary != null
-                ? diaryService.findLineUpByGameStart(date, favoriteTeam, diary.getStartGame())
+        if (selectedTime != null) {
+            time = diaryService.findStartGame(date, favoriteTeam, selectedTime);
+        }
+
+        Map<String, List<LineUp>> lineUp = isDoubleHeader
+                ? diaryService.findLineUpByGameStart(date, favoriteTeam, time)
                 : diaryService.findLineUp(date, favoriteTeam);
 
-        Map<String, GameData> gameData = isDoubleHeader && diary != null
-                ? diaryService.findGameDataByStartGame(date, favoriteTeam, diary.getStartGame())
+        Map<String, GameData> gameData = isDoubleHeader
+                ? diaryService.findGameDataByStartGame(date, favoriteTeam, time)
                 : diaryService.findGameData(date, favoriteTeam);
 
         model.addAttribute("doubleHeader", isDoubleHeader);

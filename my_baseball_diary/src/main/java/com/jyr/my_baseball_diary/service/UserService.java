@@ -3,6 +3,7 @@ package com.jyr.my_baseball_diary.service;
 import com.jyr.my_baseball_diary.domain.User;
 import com.jyr.my_baseball_diary.repository.UserRepository;
 import com.jyr.my_baseball_diary.dto.UserDTO;
+import com.jyr.my_baseball_diary.utill.CommonUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class UserService{
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final CommonUtils commonUtils;
 
     @Transactional
     public void join(UserDTO dto) {
@@ -38,16 +40,10 @@ public class UserService{
     @Transactional
     public void update(UserDTO dto) {
         validateDuplicateUser(dto.getEmail());
-        getCurrentUser().ifPresent(user -> userRepository.updateUser(user.getId(), dto.getEmail(), dto.getDisplayName(), dto.getFavoriteTeam()));
-    }
-
-    private Optional<User> getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            String email = ((UserDetails) authentication.getPrincipal()).getUsername();
-            return userRepository.findByEmail(email);
-        }
-        return Optional.empty();
+        commonUtils.getCurrentUser().ifPresent(
+                user -> userRepository.updateUser(
+                        user.getId(), dto.getEmail(),
+                        dto.getDisplayName(), dto.getFavoriteTeam()));
     }
 
     private void validateDuplicateUser(String email) {

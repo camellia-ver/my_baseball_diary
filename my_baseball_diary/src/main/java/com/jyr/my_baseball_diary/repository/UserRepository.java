@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Time;
@@ -18,6 +19,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     @Modifying
-    @Query("UPDATE User u SET u.email = :email, u.userName = :userName, u.favoriteTeam = :favoriteTeam WHERE u.id = :id")
-    void updateUser(Long id, String email, String userName, String favoriteTeam);
+    @Query("UPDATE User u SET u.email = :email, u.displayName = :displayName, u.favoriteTeam = :favoriteTeam WHERE u.id = :id")
+    void updateUser(@Param("id") Long id, @Param("email") String email, @Param("displayName") String displayName, @Param("favoriteTeam") String favoriteTeam);
 }
