@@ -12,6 +12,7 @@
     <div class="container-fluid row justify-content-center align-content-center">
         <div class="card">
             <div class = "mb-2 text-center">
+                <h1>Search Results for: <span th:text="${query}"></span></h1>
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -21,13 +22,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="item : ${diaryList}"
-                            th:onclick="|window.location.href='@{/diaries/{id}(id=${item.id})}'|">
-                            <td th:text="${item.id}"></td>
-                            <td th:text="${item.gameDate}"></td>
-                            <td th:text="${#dates.format(item.startGame, 'HH:mm')}"></td>
-                            <td th:text="${item.title}"></td>
-                        </tr>
+                    <tr th:each="item : ${diaryList}"
+                        th:onclick="|window.location.href='@{/diaries/{id}(id=${item.id})}'|">
+                        <td th:text="${item.id}"></td>
+                        <td th:text="${item.gameDate}"></td>
+                        <td th:text="${#dates.format(item.startGame, 'HH:mm')}"></td>
+                        <td th:text="${item.title}"></td>
+                    </tr>
                     </tbody>
                 </table>
                 <div class="pagination-container center-pagination">

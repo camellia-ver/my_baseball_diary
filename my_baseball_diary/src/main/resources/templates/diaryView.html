@@ -16,7 +16,7 @@
                 <input type="hidden" id="diary-id" name="id" th:value="${diaryContent.id}" th:if="${diaryContent != null}" />
                 <div class="mb-3" id="data_one">
                     <div class="item" th:text="${date}" id="game-date"></div>
-                    <div class="item" th:if="${todayGame}" th:text="${startGame}"></div>
+                    <div class="item" th:if="${todayGame}" th:text="${#dates.format(gameDataTeam1.startGame, 'HH:mm')}"></div>
                     <div class="item" th:if="${todayGame}" th:text="${gameDataTeam1.teamName} + ' VS ' + ${gameDataTeam1.matchTeam}"></div>
                     <div class="item" th:if="${todayGame}" th:text="${gameDataTeam1.stadium}"></div>
                     <div class="item" th:if="${todayGame} and ${doubleHeader}"></div>
@@ -138,6 +138,9 @@
                         수정
                     </a>
                     <button type="button" class="btn btn-light" id="delete-btn">삭제</button>
+                    <a th:href="@{/main}" class="btn btn-light">
+                        목록
+                    </a>
                 </div>
             </div>
         </div>

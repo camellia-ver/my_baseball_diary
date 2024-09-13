@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -110,7 +108,6 @@ public class DiaryController {
 
     private void populateGameData(Model model, LocalDate date, String favoriteTeam, Diary diary, String selectedTime) {
         boolean isDoubleHeader = diaryService.isDoubleHeader(date, favoriteTeam);
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         Time time = diary != null ? diary.getStartGame() : null;
 
         if (selectedTime != null) {
@@ -130,7 +127,6 @@ public class DiaryController {
         model.addAttribute("hList", lineUp.get("hitter"));
         model.addAttribute("gameDataTeam1", gameData.get("team1"));
         model.addAttribute("gameDataTeam2", gameData.get("team2"));
-        model.addAttribute("startGame", sdf.format(gameData.get("team1").getStartGame()));
     }
 
 }
