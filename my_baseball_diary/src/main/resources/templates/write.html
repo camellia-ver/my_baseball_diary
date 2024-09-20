@@ -18,8 +18,8 @@
                     <input type="hidden" name="id" th:value="0" th:if="${diaryContent == null}" />
                     <div class="mb-3" id="data_one">
                         <div class="item"><input type="date" id="date" th:value="${date}" name="gameDate"></div>
-                        <div class="item" th:if="${todayGame}" th:text="${startGame}"></div>
-                        <input type="hidden" name="startGame" th:value="${startGame}" th:if="${todayGame}" />
+                        <div class="item" th:if="${todayGame}" th:text="${#dates.format(gameDataTeam1.startGame, 'HH:mm')}"></div>
+                        <input type="hidden" name="startGame" th:value="${#dates.format(gameDataTeam1.startGame, 'HH:mm')}" th:if="${todayGame}" />
                         <input type="hidden" name="startGame" value=""/>
                         <div class="item" th:if="${todayGame}" th:text="${gameDataTeam1.teamName} + ' VS ' + ${gameDataTeam1.matchTeam}"></div>
                         <div class="item" th:if="${todayGame}" th:text="${gameDataTeam1.stadium}"></div>

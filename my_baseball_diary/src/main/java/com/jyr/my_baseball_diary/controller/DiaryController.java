@@ -79,15 +79,15 @@ public class DiaryController {
             @RequestParam(name = "selectedTime", required = false) String selectedTime
     ) {
         Diary diary = diaryService.findById(id);
-        Time startGame = diary.getStartGame();
         LocalDate gameDate = diary.getGameDate();
+        String favoriteTeam = diary.getUser().getFavoriteTeam();
+        boolean isGame = diaryService.isGame(gameDate, favoriteTeam);
 
-        if (startGame != null) {
-            String favoriteTeam = diary.getUser().getFavoriteTeam();
+        if (isGame) {
             populateGameData(model, gameDate, favoriteTeam, diary, selectedTime);
         }
 
-        model.addAttribute("todayGame", startGame != null);
+        model.addAttribute("todayGame", isGame);
         model.addAttribute("diaryContent", diary);
         model.addAttribute("date", gameDate);
 

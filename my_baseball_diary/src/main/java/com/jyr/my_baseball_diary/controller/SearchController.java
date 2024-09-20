@@ -13,8 +13,11 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping("/search")
-    public String search(@RequestParam(name = "query", required = false, defaultValue = "") String query, Model model) {
-        //model.addAttribute("results", searchService.search(query));
+    public String search(Model model,
+            @RequestParam(name = "query", required = false, defaultValue = "") String query,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        model.addAttribute("diaryList", searchService.search(query,page,size));
         model.addAttribute("query", query);
 
         return "searchResults";

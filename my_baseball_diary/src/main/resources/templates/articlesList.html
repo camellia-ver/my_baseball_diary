@@ -17,6 +17,7 @@
                     <tr>
                         <th scope="col" class="no_width">No.</th>
                         <th scope="col">경기일</th>
+                        <th scope="col">경기시간</th>
                         <th scope="col">제목</th>
                     </tr>
                     </thead>
@@ -30,7 +31,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="pagination-container center-pagination">
+                <div class="pagination-container center-pagination" th:if="${diaryList.size > 0 && diaryList.totalPages > 1}">
                     <nav>
                         <ul class="pagination">
                             <li class="page-item" th:classappend="${diaryList.hasPrevious() ? '' : 'disabled'}">

@@ -20,11 +20,15 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     @Query("SELECT d FROM Diary d WHERE d.gameDate = :date")
     List<Diary> findByGameDate(@Param("date") LocalDate date);
 
-    //Optional<Diary> findByUserId(Long id);
-
     Page<Diary> findByUserId(Long userId, Pageable pageable);
 
     @Modifying
     @Query("UPDATE Diary d SET d.title = :title, d.content = :content, d.mvp = :mvp, d.date = :date, d.startGame = :startGame, d.gameDate = :gameDate WHERE d.id = :id")
     void updateDiary(Long id, String title, String content, String mvp, LocalDateTime date, Time startGame, LocalDate gameDate);
+
+    @Query("SELECT d FROM Diary d WHERE d.title LIKE %:keyword% OR d.content LIKE %:keyword% OR d.title = :keyword OR d.content = :keyword")
+    Page<Diary> searchByTitleOrContent(@Param("keyword") String keyword, Pageable pageable);
+
+    @Query("SELECT d FROM Diary d WHERE CAST(d.date AS string) LIKE %:datePart% OR CAST(d.date AS string) = :datePart")
+    Page<Diary> findByDatePart(@Param("datePart") String datePart, Pageable pageable);
 }
