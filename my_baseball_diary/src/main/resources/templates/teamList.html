@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/teamList.css">
+</head>
+<body>
+<div th:replace="fragments/navbar_admin :: navbar_admin"></div>
+<section class="content d-flex vh-100">
+    <div class="container-fluid row justify-content-center align-content-center">
+        <div class="card">
+            <div class = "mb-2 text-center">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="no_width">No.</th>
+                        <th scope="col">로고</th>
+                        <th scope="col">팀명</th>
+                        <th scope="col">창단연도</th>
+                        <th scope="col">연고지</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btnBox-in-table">
+                                <a th:href="@{/teamForm/{id}(id=${item.id})}" class="btn btn-light">
+                                    수정
+                                </a>
+                                <button type="button" class="btn btn-light" id="delete-btn">삭제</button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="btnBox">
+                <button class="btn btn-light" type="button" id="addBtn" onclick="location.href='/teamForm'">추가</button>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

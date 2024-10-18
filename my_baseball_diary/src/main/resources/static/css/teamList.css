@@ -1,0 +1,30 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: left;
+    color:white;
+    background: #FFD9C0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    padding:5px
+}
+
+.content {padding-top: 50px;}
+
+section{width:100%}
+
+.card{border:none; background:#F4BFBF}
+
+.custom-width{width:200px;}
+
+.btnBox{text-align:right;}
+#addBtn{margin:10px; width:80px;}
