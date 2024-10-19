@@ -64,6 +64,15 @@ public class GameData {
     @Column(name = "twelve")
     private Integer twelve;
 
+//    @Column(name = "thirteen")
+//    private Integer thirteen;
+//
+//    @Column(name = "fourteen")
+//    private Integer fourteen;
+//
+//    @Column(name = "fifteen")
+//    private Integer fifteen;
+
     @Column(name = "r")
     private Integer r;
 
@@ -85,6 +94,9 @@ public class GameData {
     @Column(name = "match_team", nullable = false)
     private String matchTeam;
 
+    @Column(name = "division", nullable = false)
+    private String division;
+
     private GameData() {}
 
     @Builder
@@ -92,8 +104,10 @@ public class GameData {
                     String stadium, Integer one, Integer two, Integer three,
                     Integer four, Integer five, Integer six, Integer seven,
                     Integer eight, Integer nine, Integer ten, Integer eleven,
-                    Integer twelve, Integer r, Integer h, Integer e, Integer b,
-                    LocalDate date, Time startGame,String matchTeam) {
+                    Integer twelve,
+//                    Integer thirteen,Integer fourteen, Integer fifteen,
+                    Integer r, Integer h, Integer e, Integer b,
+                    LocalDate date, Time startGame,String matchTeam,String division) {
         this.gameResult = gameResult;
         this.teamName = teamName;
         this.homeOrAway = homeOrAway;
@@ -110,6 +124,9 @@ public class GameData {
         this.ten = ten;
         this.eleven = eleven;
         this.twelve = twelve;
+//        this.thirteen = thirteen;
+//        this.fourteen = fourteen;
+//        this.fifteen = fifteen;
         this.r = r;
         this.h = h;
         this.e = e;
@@ -117,5 +134,6 @@ public class GameData {
         this.date = date;
         this.startGame = startGame;
         this.matchTeam = matchTeam;
+        this.division = division;
     }
 }
