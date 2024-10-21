@@ -79,6 +79,9 @@
                                     <th scope="col">10</th>
                                     <th scope="col">11</th>
                                     <th scope="col">12</th>
+                                    <th scope="col" th:if="${gameDataTeam1.division == '포스트시즌'}">13</th>
+                                    <th scope="col" th:if="${gameDataTeam1.division == '포스트시즌'}">14</th>
+                                    <th scope="col" th:if="${gameDataTeam1.division == '포스트시즌'}">15</th>
                                     <th scope="col">R</th>
                                     <th scope="col">H</th>
                                     <th scope="col">E</th>
@@ -101,6 +104,9 @@
                                     <th th:text="${gameDataTeam1.ten != null ? gameDataTeam1.ten : '-'}"></th>
                                     <th th:text="${gameDataTeam1.eleven != null ? gameDataTeam1.eleven : '-'}"></th>
                                     <th th:text="${gameDataTeam1.twelve != null ? gameDataTeam1.twelve : '-'}"></th>
+                                    <th th:if="${gameDataTeam1.division == '포스트시즌'}" th:text="${gameDataTeam1.thirteen != null ? gameDataTeam1.thirteen : '-'}"></th>
+                                    <th th:if="${gameDataTeam1.division == '포스트시즌'}" th:text="${gameDataTeam1.fourteen != null ? gameDataTeam1.fourteen : '-'}"></th>
+                                    <th th:if="${gameDataTeam1.division == '포스트시즌'}" th:text="${gameDataTeam1.fifteen != null ? gameDataTeam1.fifteen : '-'}"></th>
                                     <th th:text="${gameDataTeam1.r != null ? gameDataTeam1.r : '-'}"></th>
                                     <th th:text="${gameDataTeam1.h != null ? gameDataTeam1.h : '-'}"></th>
                                     <th th:text="${gameDataTeam1.e != null ? gameDataTeam1.e : '-'}"></th>
@@ -121,6 +127,9 @@
                                     <th th:text="${gameDataTeam2.ten != null ? gameDataTeam2.ten : '-'}"></th>
                                     <th th:text="${gameDataTeam2.eleven != null ? gameDataTeam2.eleven : '-'}"></th>
                                     <th th:text="${gameDataTeam2.twelve != null ? gameDataTeam2.twelve : '-'}"></th>
+                                    <th th:if="${gameDataTeam1.division == '포스트시즌'}" th:text="${gameDataTeam2.thirteen != null ? gameDataTeam2.thirteen : '-'}"></th>
+                                    <th th:if="${gameDataTeam1.division == '포스트시즌'}" th:text="${gameDataTeam2.fourteen != null ? gameDataTeam2.fourteen : '-'}"></th>
+                                    <th th:if="${gameDataTeam1.division == '포스트시즌'}" th:text="${gameDataTeam2.fifteen != null ? gameDataTeam2.fifteen : '-'}"></th>
                                     <th th:text="${gameDataTeam2.r != null ? gameDataTeam2.r : '-'}"></th>
                                     <th th:text="${gameDataTeam2.h != null ? gameDataTeam2.h : '-'}"></th>
                                     <th th:text="${gameDataTeam2.e != null ? gameDataTeam2.e : '-'}"></th>

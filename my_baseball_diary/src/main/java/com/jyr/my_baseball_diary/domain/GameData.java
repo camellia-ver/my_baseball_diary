@@ -64,14 +64,14 @@ public class GameData {
     @Column(name = "twelve")
     private Integer twelve;
 
-//    @Column(name = "thirteen")
-//    private Integer thirteen;
-//
-//    @Column(name = "fourteen")
-//    private Integer fourteen;
-//
-//    @Column(name = "fifteen")
-//    private Integer fifteen;
+    @Column(name = "thirteen")
+    private Integer thirteen;
+
+    @Column(name = "fourteen")
+    private Integer fourteen;
+
+    @Column(name = "fifteen")
+    private Integer fifteen;
 
     @Column(name = "r")
     private Integer r;
@@ -104,9 +104,8 @@ public class GameData {
                     String stadium, Integer one, Integer two, Integer three,
                     Integer four, Integer five, Integer six, Integer seven,
                     Integer eight, Integer nine, Integer ten, Integer eleven,
-                    Integer twelve,
-//                    Integer thirteen,Integer fourteen, Integer fifteen,
-                    Integer r, Integer h, Integer e, Integer b,
+                    Integer twelve, Integer thirteen,Integer fourteen,
+                    Integer fifteen, Integer r, Integer h, Integer e, Integer b,
                     LocalDate date, Time startGame,String matchTeam,String division) {
         this.gameResult = gameResult;
         this.teamName = teamName;
@@ -124,9 +123,9 @@ public class GameData {
         this.ten = ten;
         this.eleven = eleven;
         this.twelve = twelve;
-//        this.thirteen = thirteen;
-//        this.fourteen = fourteen;
-//        this.fifteen = fifteen;
+        this.thirteen = thirteen;
+        this.fourteen = fourteen;
+        this.fifteen = fifteen;
         this.r = r;
         this.h = h;
         this.e = e;
