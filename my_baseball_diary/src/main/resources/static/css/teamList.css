@@ -20,7 +20,7 @@ body{
 
 .content {padding-top: 50px;}
 
-section{width:100%}
+section{width:100%; margin:10px}
 
 .card{border:none; background:#F4BFBF}
 

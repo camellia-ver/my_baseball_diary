@@ -14,7 +14,6 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col" class="no_width">No.</th>
                         <th scope="col">로고</th>
                         <th scope="col">팀명</th>
                         <th scope="col">창단연도</th>
@@ -23,12 +22,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr th:each="item : ${teamList}">
+                        <td><img th:src="${item.logoImage}" alt="Logo" /></td>
+                        <td th:text="${item.teamName}"></td>
+                        <td th:text="${item.startYear}"></td>
+                        <td th:text="${item.homeCity}"></td>
                         <td>
                             <div class="btnBox-in-table">
 <!--                                <a th:href="@{/teamForm/{id}(id=${item.id})}" class="btn btn-light">-->
@@ -43,7 +41,7 @@
                 </table>
             </div>
             <div class="btnBox">
-                <button class="btn btn-light" type="button" id="addBtn" onclick="location.href='/teamForm'">추가</button>
+                <button class="btn btn-light" type="button" id="addBtn" onclick="location.href='/admin/teamForm'">추가</button>
             </div>
         </div>
     </div>

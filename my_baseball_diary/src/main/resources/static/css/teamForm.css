@@ -1,0 +1,44 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: left;
+    color:white;
+    background: #FFD9C0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    padding:5px
+}
+
+.content {padding-left:20px;overflow: auto;padding-top:20px;height:80hv;}
+.card {
+    border: none;
+    background: #F4BFBF;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+section{width:100%;overflow-y: auto;}
+
+form{ padding-top:20px;}
+#data_one{display:flex;}
+.item{margin-right: 10px;font-size: 20px;}
+#content-area{display: flex;}
+#left-area{flex: 1;display: flex;flex-direction: column;padding-right:5px;}
+#right-area{flex: 3;display: flex;flex-direction: column;}
+#line-up-title{font-size:20px;padding-bottom:10px;}
+
+.btnBox{text-align:right;}
+#saveBtn{margin:10px; width:80px;}
+
+#addTeam{text-align:right;}
