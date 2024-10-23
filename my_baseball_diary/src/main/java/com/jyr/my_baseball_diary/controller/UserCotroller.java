@@ -1,7 +1,7 @@
 package com.jyr.my_baseball_diary.controller;
 
 import com.jyr.my_baseball_diary.domain.User;
-import com.jyr.my_baseball_diary.service.BaseballDataService;
+import com.jyr.my_baseball_diary.service.BaseballTeamService;
 import com.jyr.my_baseball_diary.service.UserService;
 import com.jyr.my_baseball_diary.dto.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 @RequiredArgsConstructor
 public class UserCotroller {
-    private final BaseballDataService baseballDataService;
+    private final BaseballTeamService baseballTeamService;
     private final UserService userService;
 
     @GetMapping(value = {"/", "/login"})
@@ -31,7 +31,7 @@ public class UserCotroller {
 
     @GetMapping("/signup")
     public String signup(Model model) {
-        model.addAttribute("TeamData",baseballDataService.findTeamAll());
+        model.addAttribute("TeamData",baseballTeamService.findTeamAll());
         return "signup";
     }
 

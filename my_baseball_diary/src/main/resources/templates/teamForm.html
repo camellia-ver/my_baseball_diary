@@ -11,7 +11,7 @@
     <div class="container-fluid row justify-content-center align-content-center">
         <div class="card" id="dynamicCard">
             <div class = "mb-2 text-center">
-                <form th:action="${'/addTeam'}" method="POST" id="addTeam">
+                <form th:action="${'/admin/addTeam'}" method="POST" id="addTeam">
                     <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
                     <div class="mb-3">
                         <label class="form-label">Upload Image</label>
