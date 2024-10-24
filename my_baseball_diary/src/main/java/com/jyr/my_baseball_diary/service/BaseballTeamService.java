@@ -70,4 +70,9 @@ public class BaseballTeamService {
 
         return filePath;
     }
+
+    @Transactional
+    public void delete(Long id) {
+        baseBallTeamDataRepository.deleteById(id);
+    }
 }

@@ -13,6 +13,4 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('imagePreview').style.display = 'none';
         }
     });
-
-
 });
