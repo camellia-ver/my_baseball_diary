@@ -9,6 +9,7 @@ import java.time.Year;
 @Getter
 @Setter
 public class BaseballTeamDTO {
+    private Long id;
     private String teamName;
     private MultipartFile logoImage;
     private Year startYear;

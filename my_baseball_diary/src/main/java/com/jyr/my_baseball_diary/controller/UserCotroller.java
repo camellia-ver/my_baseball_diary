@@ -31,7 +31,7 @@ public class UserCotroller {
 
     @GetMapping("/signup")
     public String signup(Model model) {
-        model.addAttribute("TeamData",baseballTeamService.findTeamAll());
+        model.addAttribute("TeamData",baseballTeamService.findBaseballTeamAll());
         return "signup";
     }
 
