@@ -3,7 +3,9 @@
 <head th:replace="fragments/head :: head"></head>
 <head>
     <link rel="stylesheet" type="text/css" href="/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="/css/statisics.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/statisics.js"></script>
 </head>
 <body>
 <div th:replace="fragments/navbar_admin :: navbar_admin"></div>
@@ -14,15 +16,13 @@
                 <div id="today">
                     <h1>TODAY 2024-10-25</h1>
                 </div>
-                <div class="data-container">
-                    <div class="box">
-                        <p>오늘 가입자 수</p>
-                        <p>100명</p>
-                    </div>
-                    <div class="box">
-                        <p>오늘 작성 글 수</p>
-                        <p>300건</p>
-                    </div>
+                <div>
+                    <p>가입자 수 추세</p>
+                    <canvas id="todayInviteUser" width="400" height="200"></canvas>
+                </div>
+                <div>
+                    <p>작성 글 수 추세</p>
+                    <canvas id="todayWriteDiary" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
