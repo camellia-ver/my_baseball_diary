@@ -224,4 +224,9 @@ public class DiaryService {
     public void delete(Long id) {
         diaryRepository.deleteById(id);
     }
+
+    public Long countTodayCreatedDiary() {
+        LocalDate today = LocalDate.now();
+        return diaryRepository.countByDate(today);
+    }
 }

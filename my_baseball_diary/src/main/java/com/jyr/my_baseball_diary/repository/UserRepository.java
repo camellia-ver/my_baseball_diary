@@ -21,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.email = :email, u.displayName = :displayName, u.favoriteTeam = :favoriteTeam WHERE u.id = :id")
     void updateUser(@Param("id") Long id, @Param("email") String email, @Param("displayName") String displayName, @Param("favoriteTeam") String favoriteTeam);
+
+    @Query("SELECT COUNT(u) FROM User u WHERE DATE(u.createDate) = :date")
+    long countByCreateDate(@Param("date") LocalDate date);
 }

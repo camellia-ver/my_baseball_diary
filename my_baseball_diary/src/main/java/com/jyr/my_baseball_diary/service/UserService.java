@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -56,5 +57,10 @@ public class UserService{
     public User findByUser(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + email));
+    }
+
+    public Long countTodayCreatedUser() {
+        LocalDate today = LocalDate.now();
+        return userRepository.countByCreateDate(today);
     }
 }

@@ -37,6 +37,8 @@ public class DiaryController {
         if (SecurityContextHolder.getContext().getAuthentication().getAuthorities()
                 .stream().anyMatch(grantedAuthority -> grantedAuthority.
                         getAuthority().equals("ROLE_ADMIN"))) {
+            model.addAttribute("countTodayCreatedUser", userService.countTodayCreatedUser());
+            model.addAttribute("countTodayCreatedDiary", diaryService.countTodayCreatedDiary());
             return "admin";
         } else {
             model.addAttribute("diaryList", diaryService.findByUserId(page,size));

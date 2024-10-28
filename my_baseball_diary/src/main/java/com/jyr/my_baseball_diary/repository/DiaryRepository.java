@@ -31,4 +31,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     @Query("SELECT d FROM Diary d WHERE CAST(d.date AS string) LIKE %:datePart% OR CAST(d.date AS string) = :datePart")
     Page<Diary> findByDatePart(@Param("datePart") String datePart, Pageable pageable);
+
+    @Query("SELECT COUNT(u) FROM User u WHERE DATE(u.date) = :date")
+    long countByDate(@Param("date") LocalDate date);
 }
